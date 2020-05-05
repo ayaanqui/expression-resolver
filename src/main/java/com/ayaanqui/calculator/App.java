@@ -19,7 +19,7 @@ public class App {
             // User help
             if (userInput.toLowerCase().equals("help") || userInput.equals("?")) {
 
-                Scanner help = new Scanner(new File("help.dat"));
+                Scanner help = new Scanner(new File("help.txt"));
                 String helpItem = "";
                 System.out.print("\n");
 
