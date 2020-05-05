@@ -141,7 +141,7 @@ public class Calculator {
         EvaluateParentheses evalParenths;
         for (int i = 0; i < formattedUserInput.size() - 1; i++) {
             if (formattedUserInput.get(i).equals("-(")) {
-                formattedUserInput.add(i, "-1");
+                formattedUserInput.add(i, "-1.0");
                 formattedUserInput.add(i + 1, "*");
                 formattedUserInput.set(i + 2, "(");
 
