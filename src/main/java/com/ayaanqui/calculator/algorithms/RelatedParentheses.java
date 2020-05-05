@@ -1,4 +1,4 @@
-package com.ayaanqui.calculator;
+package com.ayaanqui.calculator.algorithms;
 
 import java.util.ArrayList;
 import java.util.Map;

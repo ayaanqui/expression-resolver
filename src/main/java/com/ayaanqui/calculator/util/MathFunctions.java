@@ -1,4 +1,4 @@
-package com.ayaanqui.calculator;
+package com.ayaanqui.calculator.util;
 
 import java.util.ArrayList;
 import java.lang.Math;

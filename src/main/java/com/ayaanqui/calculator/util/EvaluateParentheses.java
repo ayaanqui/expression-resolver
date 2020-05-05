@@ -1,7 +1,10 @@
-package com.ayaanqui.calculator;
+package com.ayaanqui.calculator.util;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import com.ayaanqui.calculator.algorithms.RelatedParentheses;
+import com.ayaanqui.calculator.Calculator;
 
 public class EvaluateParentheses {
     private ArrayList<String> formattedUserInput;
