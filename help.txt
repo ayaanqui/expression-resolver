@@ -1,0 +1,11 @@
+HELP:
+    Input help: 1+2/2
+    Addition: num1+num2
+    Substraction: num1-num2
+    Multiplication: num1*num2
+    Division: num1/num2
+    Exponents: num^power
+    Multiple Expressions: 2+(5-7)*2^15
+
+Type exit or quit to leave the program
+.
