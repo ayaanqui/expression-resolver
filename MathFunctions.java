@@ -1,11 +1,8 @@
-package com.ayaanqui.calculator.util;
-
 import java.util.ArrayList;
 import java.lang.Math;
 
 public class MathFunctions {
-    final private String[] advOperatorList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "!", "arcsin",
-            "arccos", "arctan" };
+    final private String[] advOperatorList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "!", "arcsin", "arccos", "arctan" };
     private ArrayList<String> formattedUserInput;
 
     public MathFunctions(ArrayList<String> formattedUserInput) {
@@ -14,8 +11,8 @@ public class MathFunctions {
 
     public double factorialOf(double x) {
         double factorial = 1;
-
-        for (int i = (int) x; i > 1; i--) {
+        
+        for (int i = (int)x; i > 1; i--) {
             factorial *= i;
         }
         return factorial;
@@ -38,7 +35,7 @@ public class MathFunctions {
                 if (formattedUserInput.get(i).equals("-" + operator + "(")) {
                     formattedUserInput.set(i, operator);
                     formattedUserInput.add(i, "-1");
-                    formattedUserInput.add(i + 1, "*");
+                    formattedUserInput.add(i+1, "*");
                     formattedUserInput.add(i + 3, "(");
                 }
             }
@@ -57,7 +54,7 @@ public class MathFunctions {
                 if (formattedUserInput.get(i).equals(operator)) {
                     // Evaluates [(, x, )] from [sin, (, x, )], leaving us with [sin, x]
                     evalPrenths = new EvaluateParentheses(formattedUserInput);
-                    evalPrenths.condense(i + 1);
+                    evalPrenths.condense(i + 1); 
                     x = Double.parseDouble(evalPrenths.getSolvedInnerExpression());
 
                     switch (operator) {
@@ -106,7 +103,7 @@ public class MathFunctions {
                             formattedUserInput.set(i, Math.atan(x) + "");
                             break;
                     }
-
+                    
                     formattedUserInput.remove(i + 1); // Remove x from formattedUserInput
                 }
 

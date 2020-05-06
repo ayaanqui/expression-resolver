@@ -1,21 +1,15 @@
-package com.ayaanqui.calculator;
-
 import java.lang.Math;
 import java.util.ArrayList;
-
-import com.ayaanqui.calculator.util.ConvertConstants;
-import com.ayaanqui.calculator.util.MathFunctions;
-import com.ayaanqui.calculator.util.EvaluateParentheses;
+import java.util.Arrays;
 
 public class Calculator {
-    final private char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
+    final private String[] operatorList = { "+", "-", "*", "/", "^", "(", ")", "<" };
 
     private String userInput;
     private ArrayList<String> formattedUserInput = new ArrayList<String>();
     private ArrayList<String> userHistory = new ArrayList<String>(); // records all the solved expressions
 
-    public Calculator() {
-    }
+    public Calculator() {}
 
     public void setUp(String uInp) {
         this.userInput = uInp;
@@ -29,95 +23,52 @@ public class Calculator {
         return userHistory;
     }
 
-    private boolean handleNegative(ArrayList<String> formattedList, int pre, int op, int post) {
-        // When pre >= 0 and pre == ")" or pre is a digit
-        if (!(pre < 0) && (formattedList.get(pre).equals(")")
-                || Character.isDigit(formattedList.get(pre).charAt(formattedList.get(pre).length() - 1)))) {
-            if (op < formattedList.size() - 1 && post < formattedList.size()) {
-                formattedList.set(post, '-' + formattedList.get(post));
-                formattedList.set(op, "+");
-                return true;
-            }
-            return false;
-        }
-
-        // Concatinates op with post, then removes op
-        if (op >= 0 && post >= 1 && post < formattedList.size()) {
-            formattedList.set(post, '-' + formattedList.get(post));
-            formattedList.remove(op);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Converts "<" to the last item from userHistory. Replaces [..., "-", "x", ...]
-     * with [..., "-x", ...], where x is a "digit"
-     * 
-     * @param formattedList
-     */
-    public void operatorFormatting(ArrayList<String> formattedList) {
-        for (int i = 0; i < formattedList.size(); i++) {
-            String item = formattedList.get(i);
-
-            if (item.equals("-")) {
-                if (!handleNegative(formattedList, i - 1, i, i + 1)) {
-                    System.out.println("There was an error!");
-                }
-            } else if (item.equals("<")) { // get the the previous answer
-                if (this.userHistory.size() > 0)
-                    formattedList.set(i, userHistory.get(userHistory.size() - 1));
-                else
-                    formattedList.set(i, "0");
-            }
-        }
-    }
-
     public ArrayList<String> formatUserInput() {
-        // Trim whitespaces and $ signs
-        userInput = userInput.replaceAll("\\s", "");
+        // Remove all spaces, dollar signs, and commas...
+        userInput = userInput.replace(" ", "");
+        userInput = userInput.replace(",", "");
         userInput = userInput.replace("$", "");
 
-        StringBuilder tempInput = new StringBuilder(userInput);
-        ArrayList<String> formattedList = new ArrayList<>();
-        boolean found = false; // Prevents skipping next char
-
-        for (int i = 0; i < tempInput.length(); i++) {
-            // If found is true set i = 0 this prevents skipping over the next character
-            if (found) {
-                i = 0;
-                found = false;
-            }
-
-            for (char operator : operatorList) {
-                if (operator == tempInput.charAt(i)) {
-                    // Content before operator
-                    String prefix = tempInput.substring(0, i);
-                    if (prefix.length() > 0)
-                        formattedList.add(prefix);
-                    formattedList.add(Character.toString(operator));
-
-                    tempInput.delete(0, i + 1); // Delete the rest of the input
-                    i = 0; // Reset i to begining of input
-                    found = true;
+        /**
+         * Gets user input Adds spaces in between the operation and the operatorList
+         * Splits each item by spaces, into formattedUserInput
+         */
+        for (String j : this.operatorList) {
+            switch (j) {
+                case "<":
+                    // get the the previous answer
+                    if (userHistory.size()-1 >= 0)
+                        userInput = userInput.replace(j, userHistory.get(userHistory.size() - 1) + "");
+                    else
+                        userInput = userInput.replace(j, "");
                     break;
-                }
+                case "(":
+                    userInput = userInput.replace(j, j + " ");
+                    break;
+                case ")":
+                    userInput = userInput.replace(j, " " + j);
+                    break;
+                default:
+                    userInput = userInput.replace(j, " " + j + " ");
+                    break;
             }
         }
-        formattedList.add(tempInput.toString());
 
-        // Remove "+" if it is at the begining of the list
-        if (formattedList.get(0).equals("+"))
-            formattedList.remove(0);
+        formattedUserInput = new ArrayList<String>(Arrays.asList(userInput.split(" ")));
 
-        formattedList = new ConvertConstants(formattedList).convert();
-        operatorFormatting(formattedList);
+        for (int i = 0; i < formattedUserInput.size(); i++) {
+            if (formattedUserInput.get(i).equals("-")) {
+                formattedUserInput.set(i, "+");
+                formattedUserInput.set(i+1, "-" + formattedUserInput.get(i+1));
+            }
+        }
 
-        return formattedList;
+        return formattedUserInput;
     }
 
-    public double condenseExpression(String operator, int i) {
+    public double condenseExpression(String operator, int indexVal) {
         double output = 0; // final output
+        int i = indexVal; // index of the current value inside inpList
 
         double x = 0.0;
         double y = 0.0;
@@ -140,7 +91,7 @@ public class Calculator {
                 break;
             case "/":
                 if (y == 0) {
-                    System.err.println("Error: Can't divide by a zero");
+                    System.out.println("Error: Can't divide by a zero");
                     return 0;
                 } else {
                     output = x / y;
@@ -156,15 +107,15 @@ public class Calculator {
                 output = x + y;
                 break;
             default:
-                System.err.println("Error: operation does not exist");
+                System.out.println("Error: operation does not exist");
                 return 0;
         }
         return output;
     }
 
     public String solveExpression() {
-        this.formattedUserInput = formatUserInput();
-        System.out.println(formattedUserInput);
+        formatUserInput();
+        formattedUserInput = new ConvertConstants(formattedUserInput).convert();
         formattedUserInput = new MathFunctions(formattedUserInput).evaluateFunctions();
 
         /**
@@ -181,15 +132,15 @@ public class Calculator {
 
         // Perform parentheses before everything
         EvaluateParentheses evalParenths;
-        for (int i = 0; i < formattedUserInput.size() - 1; i++) {
+        for (int i = 0; i < formattedUserInput.size()-1; i++) {
             if (formattedUserInput.get(i).equals("-(")) {
-                formattedUserInput.add(i, "-1.0");
-                formattedUserInput.add(i + 1, "*");
-                formattedUserInput.set(i + 2, "(");
+                formattedUserInput.add(i, "-1");
+                formattedUserInput.add(i+1, "*");
+                formattedUserInput.set(i+2, "(");
 
-                i = i + 2;
+                i = i+2;
             }
-
+            
             if (formattedUserInput.get(i).equals("(")) {
                 evalParenths = new EvaluateParentheses(formattedUserInput);
                 evalParenths.condense(i);
@@ -207,7 +158,7 @@ public class Calculator {
                 formattedUserInput.remove(i + 1); // Remove number before operation
                 formattedUserInput.remove(i); // Remove operation
                 formattedUserInput.set(i - 1, condense + ""); // Change number after operation to condensed form
-
+                
                 i = 0;
             }
         }
@@ -220,7 +171,7 @@ public class Calculator {
 
                 if (formattedUserInput.get(i).equals("/"))
                     condense = condenseExpression("/", i);
-
+                
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
                 formattedUserInput.set(i - 1, condense + ""); // change number after operation to condensed form
@@ -237,7 +188,7 @@ public class Calculator {
 
                 if (formattedUserInput.get(i).equals("-"))
                     condense = condenseExpression("-", i);
-
+                
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
                 formattedUserInput.set(i - 1, condense + ""); // change number after operation to condensed form
@@ -246,14 +197,12 @@ public class Calculator {
             }
         }
 
-        userHistory.add(formattedUserInput.get(0));
+        userHistory.add(formattedUserInput.get(0) + "");
 
-        try {
-            condense = Double.parseDouble(formattedUserInput.get(0));
-        } catch (Exception e) {
+        if (formattedUserInput.size() == 1)
+            return formattedUserInput.get(0) + "";
+        else
             return "Error";
-        }
-        return formattedUserInput.get(0);
     }
 
     public String toString() {

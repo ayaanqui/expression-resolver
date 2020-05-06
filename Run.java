@@ -1,10 +1,8 @@
-package com.ayaanqui.calculator;
-
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
 
-public class App {
+public class Run {
     public static void main(String[] args) throws IOException {
         Scanner keyboard = new Scanner(System.in);
         Calculator calc = new Calculator();
@@ -19,7 +17,7 @@ public class App {
             // User help
             if (userInput.toLowerCase().equals("help") || userInput.equals("?")) {
 
-                Scanner help = new Scanner(new File("help.txt"));
+                Scanner help = new Scanner(new File("help.dat"));
                 String helpItem = "";
                 System.out.print("\n");
 
