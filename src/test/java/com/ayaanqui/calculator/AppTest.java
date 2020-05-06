@@ -34,7 +34,7 @@ public class AppTest {
         assertEquals("1568.13389786663", calculator.solveExpression());
 
         calculator.setUp("+1");
-        assertEquals("1.0", calculator.solveExpression());
+        assertEquals("1", calculator.solveExpression());
     }
 
     /**
@@ -58,7 +58,7 @@ public class AppTest {
         assertEquals("0.0", calculator.solveExpression());
 
         calculator.setUp("-1");
-        assertEquals("-1.0", calculator.solveExpression());
+        assertEquals("-1", calculator.solveExpression());
 
         calculator.setUp("15-34");
         assertEquals("-19.0", calculator.solveExpression());
@@ -276,5 +276,22 @@ public class AppTest {
 
         calculator.setUp("sin(20)+pi*2");
         assertEquals("7.196130557907214", calculator.solveExpression());
+    }
+
+    @Test
+    public void testMisc() {
+        Calculator calculator = new Calculator();
+
+        calculator.setUp("-1");
+        assertEquals("-1", calculator.solveExpression());
+
+        calculator.setUp("<+1");
+        assertEquals("0.0", calculator.solveExpression());
+
+        calculator.setUp("123-1");
+        assertEquals("122.0", calculator.solveExpression());
+
+        calculator.setUp("(123)-1");
+        assertEquals("122.0", calculator.solveExpression());
     }
 }
