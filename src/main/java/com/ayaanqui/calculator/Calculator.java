@@ -164,7 +164,6 @@ public class Calculator {
 
     public String solveExpression() {
         this.formattedUserInput = formatUserInput();
-        System.out.println(formattedUserInput);
         formattedUserInput = new MathFunctions(formattedUserInput).evaluateFunctions();
 
         /**
