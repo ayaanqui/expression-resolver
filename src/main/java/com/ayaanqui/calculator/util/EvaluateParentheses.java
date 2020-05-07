@@ -11,7 +11,7 @@ public class EvaluateParentheses {
     }
 
     public static String condense(ArrayList<String> formattedList, int start) {
-        HashMap<Integer, Integer> relatedParentheses = new RelatedParentheses(formattedList).evaluateRelations();
+        HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
 
         int end = relatedParentheses.get(start);
 
