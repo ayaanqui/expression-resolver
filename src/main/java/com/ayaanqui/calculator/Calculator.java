@@ -180,7 +180,6 @@ public class Calculator {
         }
 
         // Perform parentheses before everything
-        EvaluateParentheses evalParenths;
         for (int i = 0; i < formattedUserInput.size() - 1; i++) {
             if (formattedUserInput.get(i).equals("-(")) {
                 formattedUserInput.add(i, "-1.0");
@@ -191,10 +190,7 @@ public class Calculator {
             }
 
             if (formattedUserInput.get(i).equals("(")) {
-                evalParenths = new EvaluateParentheses(formattedUserInput);
-                evalParenths.condense(i);
-                formattedUserInput = evalParenths.getFormattedUserInput();
-
+                EvaluateParentheses.condense(formattedUserInput, i);
                 i = 0;
             }
         }
