@@ -1,8 +1,7 @@
 package com.ayaanqui.calculator.algorithms;
 
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class RelatedParentheses {
@@ -15,16 +14,15 @@ public class RelatedParentheses {
         this.userInpList = userInpList;
     }
 
-    public Map<Integer, Integer> evaluateRelations() {
+    public HashMap<Integer, Integer> evaluateRelations() {
         Stack<Integer> openingParenthesis = new Stack<>();
-        Map<Integer, Integer> relationships = new TreeMap<Integer, Integer>();
+        HashMap<Integer, Integer> relationships = new HashMap<>();
 
         for (int i = 0; i < userInpList.size(); i++) {
             if (userInpList.get(i).equals("(")) {
                 openingParenthesis.push(i);
             } else if (userInpList.get(i).equals(")") && openingParenthesis.size() > 0) {
-                relationships.put(openingParenthesis.peek(), i);
-                openingParenthesis.pop();
+                relationships.put(openingParenthesis.pop(), i);
             }
         }
         return relationships;
