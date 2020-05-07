@@ -47,72 +47,52 @@ public class MathFunctions {
 
     public ArrayList<String> evaluateFunctions() {
         formatFunctions();
-        double x = 0.0;
 
-        EvaluateParentheses evalPrenths;
-
-        for (String operator : advOperatorList) {
-            for (int i = 0; i < formattedUserInput.size(); i++) {
-
+        for (int i = 0; i < formattedUserInput.size(); i++) {
+            for (String operator : advOperatorList) {
                 if (formattedUserInput.get(i).equals(operator)) {
                     // Evaluates [(, x, )] from [sin, (, x, )], leaving us with [sin, x]
-                    evalPrenths = new EvaluateParentheses(formattedUserInput);
-                    evalPrenths.condense(i + 1);
-                    x = Double.parseDouble(evalPrenths.getSolvedInnerExpression());
+                    double x = Double.parseDouble(EvaluateParentheses.condense(formattedUserInput, i + 1));
 
                     switch (operator) {
-                        case "sqrt":
-                            // Square Root
+                        case "sqrt": // Square Root
                             formattedUserInput.set(i, Math.sqrt(x) + "");
                             break;
-                        case "sin":
-                            // Sine function
+                        case "sin": // Sine function
                             formattedUserInput.set(i, Math.sin(x) + "");
                             break;
-                        case "cos":
-                            // Cosine function
+                        case "cos": // Cosine function
                             formattedUserInput.set(i, Math.cos(x) + "");
                             break;
-                        case "tan":
-                            // Tangent function
+                        case "tan": // Tangent function
                             formattedUserInput.set(i, Math.tan(x) + "");
                             break;
-                        case "ln":
-                            // Natural Log (base e) function
+                        case "ln": // Natural Log (base e) function
                             formattedUserInput.set(i, Math.log(x) + "");
                             break;
-                        case "abs":
-                            // Absolute
+                        case "abs": // Absolute
                             formattedUserInput.set(i, Math.abs(x) + "");
                             break;
-                        case "exp":
-                            // Exponential e
+                        case "exp": // Exponential e
                             formattedUserInput.set(i, Math.exp(x) + "");
                             break;
-                        case "fact":
-                            // Factorial
+                        case "fact": // Factorial
                             formattedUserInput.set(i, factorialOf(x) + "");
                             break;
-                        case "arcsin":
-                            // Inverse Sine
+                        case "arcsin": // Inverse Sine
                             formattedUserInput.set(i, Math.asin(x) + "");
                             break;
-                        case "arccos":
-                            // Inverse Cosine
+                        case "arccos": // Inverse Cosine
                             formattedUserInput.set(i, Math.acos(x) + "");
                             break;
-                        case "arctan":
-                            // Inverse Tangent value
+                        case "arctan": // Inverse Tangent value
                             formattedUserInput.set(i, Math.atan(x) + "");
                             break;
                     }
-
                     formattedUserInput.remove(i + 1); // Remove x from formattedUserInput
                 }
-
             }
         }
-
         return formattedUserInput;
     }
 }
