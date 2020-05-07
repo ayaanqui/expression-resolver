@@ -128,50 +128,39 @@ public class Calculator {
         return formattedList;
     }
 
+    private double catchNumberException(String elem) {
+        double result;
+        try {
+            result = Double.parseDouble(elem); // value of i-1
+        } catch (NumberFormatException e) {
+            return 0.0;
+        }
+        return result;
+    }
+
     public double condenseExpression(char operator, int i) {
-        double output = 0; // final output
-
-        double x = 0.0;
-        double y = 0.0;
-
-        try {
-            x = Double.parseDouble(formattedUserInput.get(i - 1)); // value of i-1
-        } catch (NumberFormatException e) {
-            x = 0.0;
-        }
-
-        try {
-            y = Double.parseDouble(formattedUserInput.get(i + 1)); // value of i+1
-        } catch (NumberFormatException e) {
-            y = 0.0;
-        }
+        double x = catchNumberException(formattedUserInput.get(i - 1));
+        double y = catchNumberException(formattedUserInput.get(i + 1));
 
         switch (operator) {
             case '^':
-                output = Math.pow(x, y);
-                break;
+                return Math.pow(x, y);
             case '/':
                 if (y == 0) {
                     System.err.println("Error: Can't divide by a zero");
                     return 0;
-                } else {
-                    output = x / y;
                 }
-                break;
+                return x / y;
             case '*':
-                output = x * y;
-                break;
+                return x * y;
             case '-':
-                output = x - y;
-                break;
+                return x - y;
             case '+':
-                output = x + y;
-                break;
+                return x + y;
             default:
                 System.err.println("Error: operation does not exist");
                 return 0;
         }
-        return output;
     }
 
     public String solveExpression() {
