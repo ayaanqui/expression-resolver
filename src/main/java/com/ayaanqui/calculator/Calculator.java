@@ -116,7 +116,7 @@ public class Calculator {
         return formattedList;
     }
 
-    public double condenseExpression(String operator, int i) {
+    public double condenseExpression(char operator, int i) {
         double output = 0; // final output
 
         double x = 0.0;
@@ -135,10 +135,10 @@ public class Calculator {
         }
 
         switch (operator) {
-            case "^":
+            case '^':
                 output = Math.pow(x, y);
                 break;
-            case "/":
+            case '/':
                 if (y == 0) {
                     System.err.println("Error: Can't divide by a zero");
                     return 0;
@@ -146,13 +146,13 @@ public class Calculator {
                     output = x / y;
                 }
                 break;
-            case "*":
+            case '*':
                 output = x * y;
                 break;
-            case "-":
+            case '-':
                 output = x - y;
                 break;
-            case "+":
+            case '+':
                 output = x + y;
                 break;
             default:
@@ -201,7 +201,7 @@ public class Calculator {
         // Perform Exponents only after all parentheses have been evaluated
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("^")) {
-                condense = condenseExpression("^", i);
+                condense = condenseExpression('^', i);
 
                 formattedUserInput.remove(i + 1); // Remove number before operation
                 formattedUserInput.remove(i); // Remove operation
@@ -215,10 +215,10 @@ public class Calculator {
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("*") || formattedUserInput.get(i).equals("/")) {
                 if (formattedUserInput.get(i).equals("*"))
-                    condense = condenseExpression("*", i);
+                    condense = condenseExpression('*', i);
 
                 if (formattedUserInput.get(i).equals("/"))
-                    condense = condenseExpression("/", i);
+                    condense = condenseExpression('/', i);
 
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
@@ -232,10 +232,10 @@ public class Calculator {
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("+") || formattedUserInput.get(i).equals("-")) {
                 if (formattedUserInput.get(i).equals("+"))
-                    condense = condenseExpression("+", i);
+                    condense = condenseExpression('+', i);
 
                 if (formattedUserInput.get(i).equals("-"))
-                    condense = condenseExpression("-", i);
+                    condense = condenseExpression('-', i);
 
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
