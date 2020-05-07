@@ -11,7 +11,7 @@ public class App {
         String userInput = "";
         int cnt = 0;
 
-        System.out.print("<< ");
+        System.out.print(">> ");
         userInput = keyboard.nextLine();
         userInput = userInput.toLowerCase();
 
@@ -43,15 +43,20 @@ public class App {
                 }
 
             } else {
-
                 calc.expression(userInput);
-                String answer = calc + "";
-                System.out.println(">> " + calc.getUserInput().replace(" ", "") + " = " + answer + "\n");
+                Calculator.Response res = calc.solveExpression();
 
+                if (res.success)
+                    System.out.println(res.result + "\n");
+                else {
+                    for (String error : res.errors) {
+                        System.err.println(error);
+                    }
+                }
             }
             cnt++;
 
-            System.out.print("<< ");
+            System.out.print(">> ");
             userInput = keyboard.next();
         }
         keyboard.close();

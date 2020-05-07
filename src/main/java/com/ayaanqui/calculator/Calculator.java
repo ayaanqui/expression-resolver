@@ -14,6 +14,15 @@ public class Calculator {
     private ArrayList<String> formattedUserInput = new ArrayList<>();
     private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
 
+    public static class Response {
+        public boolean success;
+        public double result;
+        public String[] errors;
+
+        public Response() {
+        }
+    }
+
     /**
      * Given positions for prefix, operator, and postfix, format negatives. Given
      * formattedList [.., "x", "-", "num", ..] returns [.., "x", "+", "-num", ..],
@@ -146,10 +155,6 @@ public class Calculator {
             case '^':
                 return Math.pow(x, y);
             case '/':
-                if (y == 0) {
-                    System.err.println("Error: Can't divide by a zero");
-                    return 0;
-                }
                 return x / y;
             case '*':
                 return x * y;
@@ -163,7 +168,7 @@ public class Calculator {
         }
     }
 
-    public String solveExpression() {
+    public Response solveExpression() {
         this.formattedUserInput = formatUserInput();
         formattedUserInput = new MathFunctions(formattedUserInput).evaluateFunctions();
 
@@ -214,8 +219,15 @@ public class Calculator {
                 if (formattedUserInput.get(i).equals("*"))
                     condense = condenseExpression('*', i);
 
-                if (formattedUserInput.get(i).equals("/"))
+                if (formattedUserInput.get(i).equals("/")) {
                     condense = condenseExpression('/', i);
+                    if (Double.isInfinite(condense)) {
+                        Response res = new Response();
+                        res.success = false;
+                        res.errors = new String[] { "Could not divide by zero" };
+                        return res;
+                    }
+                }
 
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
@@ -242,14 +254,26 @@ public class Calculator {
             }
         }
 
-        userHistory.add(formattedUserInput.get(0));
+        Response res = new Response();
+        if (formattedUserInput.size() >= 1) {
+            try {
+                userHistory.add(formattedUserInput.get(0));
 
-        try {
-            condense = Double.parseDouble(formattedUserInput.get(0));
-        } catch (Exception e) {
-            return "Error";
+                res.result = Double.parseDouble(formattedUserInput.get(0));
+                res.success = true;
+                return res;
+            } catch (Exception e) {
+                res.success = false;
+                res.errors = new String[] { "Not a number" };
+                return res;
+            }
+        } else {
+            System.err.println(formattedUserInput);
+
+            res.success = false;
+            res.errors = new String[] { "Could not resolve expression" };
+            return res;
         }
-        return formattedUserInput.get(0);
     }
 
     public String toString() {

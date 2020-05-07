@@ -27,7 +27,7 @@ public class EvaluateParentheses {
 
         Calculator newExpression = new Calculator();
         newExpression.expression(innerExpression);
-        String solvedInnerExpression = newExpression.solveExpression();
+        String solvedInnerExpression = Double.toString(newExpression.solveExpression().result);
 
         formattedList.set(start, solvedInnerExpression);
 
