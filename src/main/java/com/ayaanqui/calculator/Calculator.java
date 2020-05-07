@@ -11,24 +11,21 @@ public class Calculator {
     final private char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
 
     private String userInput;
-    private ArrayList<String> formattedUserInput = new ArrayList<String>();
-    private ArrayList<String> userHistory = new ArrayList<String>(); // records all the solved expressions
+    private ArrayList<String> formattedUserInput = new ArrayList<>();
+    private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
 
-    public Calculator() {
-    }
-
-    public void expression(String uInp) {
-        this.userInput = uInp;
-    }
-
-    public String getUserInput() {
-        return userInput;
-    }
-
-    public ArrayList<String> getUserHistory() {
-        return userHistory;
-    }
-
+    /**
+     * Given positions for prefix, operator, and postfix, format negatives. Given
+     * formattedList [.., "x", "-", "num", ..] returns [.., "x", "+", "-num", ..],
+     * where x = ")" or a number. For everything else removes "-" and concatinates
+     * "-" to post.
+     * 
+     * @param formattedList
+     * @param pre
+     * @param op
+     * @param post
+     * @return
+     */
     private boolean handleNegative(ArrayList<String> formattedList, int pre, int op, int post) {
         // When pre >= 0 and pre == ")" or pre is a digit
         if (!(pre < 0) && (formattedList.get(pre).equals(")")
@@ -51,12 +48,12 @@ public class Calculator {
     }
 
     /**
-     * Converts "<" to the last item from userHistory. Replaces [..., "-", "x", ...]
-     * with [..., "-x", ...], where x is a "digit"
+     * Converts "<" to the last item from userHistory, and handles elements with
+     * "-".
      * 
      * @param formattedList
      */
-    public void operatorFormatting(ArrayList<String> formattedList) {
+    private void operatorFormatting(ArrayList<String> formattedList) {
         for (int i = 0; i < formattedList.size(); i++) {
             String item = formattedList.get(i);
 
@@ -71,6 +68,21 @@ public class Calculator {
                     formattedList.set(i, "0");
             }
         }
+    }
+
+    public Calculator() {
+    }
+
+    public void expression(String uInp) {
+        this.userInput = uInp;
+    }
+
+    public String getUserInput() {
+        return userInput;
+    }
+
+    public ArrayList<String> getUserHistory() {
+        return userHistory;
     }
 
     public ArrayList<String> formatUserInput() {
@@ -110,7 +122,7 @@ public class Calculator {
         if (formattedList.get(0).equals("+"))
             formattedList.remove(0);
 
-        formattedList = new ConvertConstants(formattedList).convert();
+        new ConvertConstants(formattedList).convert();
         operatorFormatting(formattedList);
 
         return formattedList;
