@@ -44,7 +44,7 @@ public class App {
 
             } else {
 
-                calc.setUp(userInput);
+                calc.expression(userInput);
                 String answer = calc + "";
                 System.out.println(">> " + calc.getUserInput().replace(" ", "") + " = " + answer + "\n");
 

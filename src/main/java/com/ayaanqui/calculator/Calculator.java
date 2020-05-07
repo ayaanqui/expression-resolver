@@ -17,7 +17,7 @@ public class Calculator {
     public Calculator() {
     }
 
-    public void setUp(String uInp) {
+    public void expression(String uInp) {
         this.userInput = uInp;
     }
 

@@ -30,7 +30,7 @@ public class EvaluateParentheses {
         }
 
         Calculator newExpression = new Calculator();
-        newExpression.setUp(innerExpression);
+        newExpression.expression(innerExpression);
         solvedInnerExpression = newExpression.solveExpression() + "";
 
         // Removing elements from the back, to avoid IndexOutOfBounds Errors
