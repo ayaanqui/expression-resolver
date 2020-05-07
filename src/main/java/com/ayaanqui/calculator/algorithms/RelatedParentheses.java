@@ -5,23 +5,17 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class RelatedParentheses {
-    private ArrayList<String> userInpList = new ArrayList<String>();
-
     public RelatedParentheses() {
     }
 
-    public RelatedParentheses(ArrayList<String> userInpList) {
-        this.userInpList = userInpList;
-    }
-
-    public HashMap<Integer, Integer> evaluateRelations() {
+    public static HashMap<Integer, Integer> evaluateRelations(ArrayList<String> formattedList) {
         Stack<Integer> openingParenthesis = new Stack<>();
         HashMap<Integer, Integer> relationships = new HashMap<>();
 
-        for (int i = 0; i < userInpList.size(); i++) {
-            if (userInpList.get(i).equals("(")) {
+        for (int i = 0; i < formattedList.size(); i++) {
+            if (formattedList.get(i).equals("(")) {
                 openingParenthesis.push(i);
-            } else if (userInpList.get(i).equals(")") && openingParenthesis.size() > 0) {
+            } else if (formattedList.get(i).equals(")") && openingParenthesis.size() > 0) {
                 relationships.put(openingParenthesis.pop(), i);
             }
         }
