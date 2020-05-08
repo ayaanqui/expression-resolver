@@ -145,7 +145,7 @@ public class Calculator {
             result = Double.parseDouble(elem); // value of i-1
         } catch (NumberFormatException e) {
             res.success = false;
-            res.errors = new String[] { "One of the values provided is not a number" };
+            res.errors = new String[] { "Operator requires two numbers" };
             return res;
         }
         res.success = true;
@@ -154,6 +154,14 @@ public class Calculator {
     }
 
     public Response condenseExpression(char operator, int i) {
+        // Check to see if (i-1) and (i-1) are within the bounds of formattedUserInput
+        if (i - 1 < 0 || i + 1 >= formattedUserInput.size()) {
+            Response res = new Response();
+            res.success = false;
+            res.errors = new String[] { "Operator requires two numbers" };
+            return res;
+        }
+
         Response x = catchNumberException(formattedUserInput.get(i - 1));
         Response y = catchNumberException(formattedUserInput.get(i + 1));
 
