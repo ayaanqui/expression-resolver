@@ -8,10 +8,10 @@ import com.ayaanqui.calculator.util.MathFunctions;
 import com.ayaanqui.calculator.util.EvaluateParentheses;
 
 public class Calculator {
-    final private char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
+    private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
 
     private String userInput;
-    private ArrayList<String> formattedUserInput = new ArrayList<>();
+    private ArrayList<String> formattedUserInput;
     private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
 
     public static class Response {

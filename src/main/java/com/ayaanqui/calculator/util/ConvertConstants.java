@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class ConvertConstants {
-    final private String[] constants = { "pi", "e", "tau" };
-    private HashMap<String, Double> constantMap = new HashMap<>();
+    private final String[] constants = { "pi", "e", "tau" };
+    private HashMap<String, Double> constantMap;
     private ArrayList<String> userInpList;
 
     public ConvertConstants(ArrayList<String> userInpList) {
         this.userInpList = userInpList;
+        this.constantMap = new HashMap<>();
 
         // Define constants
         constantMap.put("pi", Math.PI);
