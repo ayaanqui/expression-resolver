@@ -10,8 +10,15 @@ public class EvaluateParentheses {
     public EvaluateParentheses() {
     }
 
-    public static String condense(ArrayList<String> formattedList, int start) {
+    public static Calculator.Response condense(ArrayList<String> formattedList, int start) {
         HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
+
+        if (relatedParentheses.isEmpty()) {
+            Calculator.Response res = new Calculator.Response();
+            res.success = false;
+            res.errors = new String[] { "Parentheses mismatch" };
+            return res;
+        }
 
         int end = relatedParentheses.get(start);
 
@@ -27,10 +34,10 @@ public class EvaluateParentheses {
 
         Calculator newExpression = new Calculator();
         newExpression.expression(innerExpression);
-        String solvedInnerExpression = Double.toString(newExpression.solveExpression().result);
+        Calculator.Response res = newExpression.solveExpression();
 
-        formattedList.set(start, solvedInnerExpression);
-
-        return solvedInnerExpression;
+        if (res.success)
+            formattedList.set(start, Double.toString(res.result));
+        return res;
     }
 }

@@ -50,8 +50,9 @@ public class App {
                     System.out.println(res.result + "\n");
                 else {
                     for (String error : res.errors) {
-                        System.err.println(error);
+                        System.err.println(" *" + error);
                     }
+                    System.out.println();
                 }
             }
             cnt++;

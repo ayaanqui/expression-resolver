@@ -137,40 +137,56 @@ public class Calculator {
         return formattedList;
     }
 
-    private double catchNumberException(String elem) {
+    private Response catchNumberException(String elem) {
         double result;
+        Response res = new Response();
+
         try {
             result = Double.parseDouble(elem); // value of i-1
         } catch (NumberFormatException e) {
-            return 0.0;
+            res.success = false;
+            res.errors = new String[] { "One of the values provided is not a number" };
+            return res;
         }
-        return result;
+        res.success = true;
+        res.result = result;
+        return res;
     }
 
-    public double condenseExpression(char operator, int i) {
-        double x = catchNumberException(formattedUserInput.get(i - 1));
-        double y = catchNumberException(formattedUserInput.get(i + 1));
+    public Response condenseExpression(char operator, int i) {
+        Response x = catchNumberException(formattedUserInput.get(i - 1));
+        Response y = catchNumberException(formattedUserInput.get(i + 1));
 
-        switch (operator) {
-            case '^':
-                return Math.pow(x, y);
-            case '/':
-                return x / y;
-            case '*':
-                return x * y;
-            case '-':
-                return x - y;
-            case '+':
-                return x + y;
-            default:
-                System.err.println("Error: operation does not exist");
-                return 0;
-        }
+        if (!x.success)
+            return x;
+        if (!y.success)
+            return y;
+
+        double output = 0.0;
+        if (operator == '^')
+            output = Math.pow(x.result, y.result);
+        else if (operator == '/')
+            output = x.result / y.result;
+        else if (operator == '*')
+            output = x.result * y.result;
+        else if (operator == '-')
+            output = x.result - y.result;
+        else if (operator == '+')
+            output = x.result + y.result;
+        Response res = new Response();
+        res.success = true;
+        res.result = output;
+        return res;
     }
 
     public Response solveExpression() {
         this.formattedUserInput = formatUserInput();
-        formattedUserInput = new MathFunctions(formattedUserInput).evaluateFunctions();
+        Response evalFunctionsResponse = new MathFunctions(formattedUserInput).evaluateFunctions();
+        if (evalFunctionsResponse != null) {
+            // If Response is not null then Response.success is set to false
+            // So just return the errors...
+            return evalFunctionsResponse;
+        }
 
         /**
          * Set condense to first element of formattedUserInput, in case the user enters
@@ -195,7 +211,9 @@ public class Calculator {
             }
 
             if (formattedUserInput.get(i).equals("(")) {
-                EvaluateParentheses.condense(formattedUserInput, i);
+                Response res = EvaluateParentheses.condense(formattedUserInput, i);
+                if (!res.success)
+                    return res;
                 i = 0;
             }
         }
@@ -203,7 +221,10 @@ public class Calculator {
         // Perform Exponents only after all parentheses have been evaluated
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("^")) {
-                condense = condenseExpression('^', i);
+                Response res = condenseExpression('^', i);
+                if (!res.success)
+                    return res;
+                condense = res.result;
 
                 formattedUserInput.remove(i + 1); // Remove number before operation
                 formattedUserInput.remove(i); // Remove operation
@@ -216,13 +237,21 @@ public class Calculator {
         // Perform multiplication/division before addition/subtraction
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("*") || formattedUserInput.get(i).equals("/")) {
-                if (formattedUserInput.get(i).equals("*"))
-                    condense = condenseExpression('*', i);
+                if (formattedUserInput.get(i).equals("*")) {
+                    Response res = condenseExpression('*', i);
+                    if (!res.success)
+                        return res;
+                    condense = res.result;
+                }
 
                 if (formattedUserInput.get(i).equals("/")) {
-                    condense = condenseExpression('/', i);
+                    Response res = condenseExpression('/', i);
+                    if (!res.success)
+                        return res;
+                    condense = res.result;
+
                     if (Double.isInfinite(condense)) {
-                        Response res = new Response();
+                        res = new Response();
                         res.success = false;
                         res.errors = new String[] { "Could not divide by zero" };
                         return res;
@@ -240,11 +269,19 @@ public class Calculator {
         // Perform addition/subtraction after everything else
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("+") || formattedUserInput.get(i).equals("-")) {
-                if (formattedUserInput.get(i).equals("+"))
-                    condense = condenseExpression('+', i);
+                if (formattedUserInput.get(i).equals("+")) {
+                    Response res = condenseExpression('+', i);
+                    if (!res.success)
+                        return res;
+                    condense = res.result;
+                }
 
-                if (formattedUserInput.get(i).equals("-"))
-                    condense = condenseExpression('-', i);
+                if (formattedUserInput.get(i).equals("-")) {
+                    Response res = condenseExpression('-', i);
+                    if (!res.success)
+                        return res;
+                    condense = res.result;
+                }
 
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
@@ -264,7 +301,7 @@ public class Calculator {
                 return res;
             } catch (Exception e) {
                 res.success = false;
-                res.errors = new String[] { "Not a number" };
+                res.errors = new String[] { "Not a number", "Error parsing input" };
                 return res;
             }
         } else {

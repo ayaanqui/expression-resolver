@@ -19,6 +19,13 @@ public class RelatedParentheses {
                 relationships.put(openingParenthesis.pop(), i);
             }
         }
-        return relationships;
+
+        if (openingParenthesis.empty())
+            return relationships;
+        else {
+            // If the stack is not empty then we have opening parentheses
+            // that have no pair, so return empty map
+            return new HashMap<Integer, Integer>();
+        }
     }
 }

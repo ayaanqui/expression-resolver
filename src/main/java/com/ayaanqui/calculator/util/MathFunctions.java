@@ -1,6 +1,9 @@
 package com.ayaanqui.calculator.util;
 
 import java.util.ArrayList;
+
+import com.ayaanqui.calculator.Calculator;
+
 import java.lang.Math;
 
 public class MathFunctions {
@@ -45,14 +48,19 @@ public class MathFunctions {
         }
     }
 
-    public ArrayList<String> evaluateFunctions() {
+    public Calculator.Response evaluateFunctions() {
         formatFunctions();
 
         for (int i = 0; i < formattedUserInput.size(); i++) {
             for (String operator : advOperatorList) {
                 if (formattedUserInput.get(i).equals(operator)) {
                     // Evaluates [(, x, )] from [sin, (, x, )], leaving us with [sin, x]
-                    double x = Double.parseDouble(EvaluateParentheses.condense(formattedUserInput, i + 1));
+                    Calculator.Response evalaluateParenthesesResponse = EvaluateParentheses.condense(formattedUserInput,
+                            i + 1);
+
+                    if (!evalaluateParenthesesResponse.success)
+                        return evalaluateParenthesesResponse;
+                    double x = evalaluateParenthesesResponse.result;
 
                     switch (operator) {
                         case "sqrt": // Square Root
@@ -93,6 +101,6 @@ public class MathFunctions {
                 }
             }
         }
-        return formattedUserInput;
+        return null;
     }
 }
