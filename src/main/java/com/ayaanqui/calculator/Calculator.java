@@ -14,6 +14,15 @@ public class Calculator {
     private ArrayList<String> formattedUserInput;
     private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
 
+    /**
+     * Static class for handling errors, and holding the correct value if there are
+     * no errors.
+     * 
+     * Usage: set success = false if there was an error trying process the
+     * expression and set error = new String[] {"Example error...", "More errors"}.
+     * If the expression was valid and processed successfully then set success =
+     * true and set result to the processed value.
+     */
     public static class Response {
         public boolean success;
         public double result;
@@ -21,6 +30,21 @@ public class Calculator {
 
         public Response() {
         }
+    }
+
+    public Calculator() {
+    }
+
+    public void expression(String uInp) {
+        this.userInput = uInp;
+    }
+
+    public String getUserInput() {
+        return userInput;
+    }
+
+    public ArrayList<String> getUserHistory() {
+        return userHistory;
     }
 
     /**
@@ -77,21 +101,6 @@ public class Calculator {
                     formattedList.set(i, "0");
             }
         }
-    }
-
-    public Calculator() {
-    }
-
-    public void expression(String uInp) {
-        this.userInput = uInp;
-    }
-
-    public String getUserInput() {
-        return userInput;
-    }
-
-    public ArrayList<String> getUserHistory() {
-        return userHistory;
     }
 
     public ArrayList<String> formatUserInput() {
