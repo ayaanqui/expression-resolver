@@ -7,8 +7,8 @@ import com.ayaanqui.calculator.Calculator;
 import java.lang.Math;
 
 public class MathFunctions {
-    private static final String[] advOperatorList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "!",
-            "arcsin", "arccos", "arctan" };
+    private static final String[] advOperatorList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
+            "arccos", "arctan" };
     private ArrayList<String> formattedUserInput;
 
     public MathFunctions(ArrayList<String> formattedUserInput) {
