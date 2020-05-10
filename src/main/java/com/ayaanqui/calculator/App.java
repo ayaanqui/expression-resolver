@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
 
+import com.ayaanqui.calculator.objects.Response;
+
 public class App {
     public static void main(String[] args) throws IOException {
         Scanner keyboard = new Scanner(System.in);
@@ -29,7 +31,7 @@ public class App {
                 }
             } else {
                 calc.expression(userInput);
-                Calculator.Response res = calc.solveExpression();
+                Response res = calc.solveExpression();
 
                 if (res.success)
                     System.out.println(res.result);

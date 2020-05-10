@@ -4,17 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.ayaanqui.calculator.algorithms.RelatedParentheses;
+import com.ayaanqui.calculator.objects.Response;
 import com.ayaanqui.calculator.Calculator;
 
 public class EvaluateParentheses {
     public EvaluateParentheses() {
     }
 
-    public static Calculator.Response condense(ArrayList<String> formattedList, int start) {
+    public static Response condense(ArrayList<String> formattedList, int start) {
         HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
 
         if (relatedParentheses.isEmpty()) {
-            Calculator.Response res = new Calculator.Response();
+            Response res = new Response();
             res.success = false;
             res.errors = new String[] { "Parentheses mismatch" };
             return res;
@@ -34,7 +35,7 @@ public class EvaluateParentheses {
 
         Calculator newExpression = new Calculator();
         newExpression.expression(innerExpression);
-        Calculator.Response res = newExpression.solveExpression();
+        Response res = newExpression.solveExpression();
 
         if (res.success)
             formattedList.set(start, Double.toString(res.result));

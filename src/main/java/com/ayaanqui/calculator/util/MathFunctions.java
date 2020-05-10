@@ -1,10 +1,9 @@
 package com.ayaanqui.calculator.util;
 
 import java.util.ArrayList;
-
-import com.ayaanqui.calculator.Calculator;
-
 import java.lang.Math;
+
+import com.ayaanqui.calculator.objects.Response;
 
 public class MathFunctions {
     private static final String[] advOperatorList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
@@ -48,15 +47,14 @@ public class MathFunctions {
         }
     }
 
-    public Calculator.Response evaluateFunctions() {
+    public Response evaluateFunctions() {
         formatFunctions();
 
         for (int i = 0; i < formattedUserInput.size(); i++) {
             for (String operator : advOperatorList) {
                 if (formattedUserInput.get(i).equals(operator)) {
                     // Evaluates [(, x, )] from [sin, (, x, )], leaving us with [sin, x]
-                    Calculator.Response evalaluateParenthesesResponse = EvaluateParentheses.condense(formattedUserInput,
-                            i + 1);
+                    Response evalaluateParenthesesResponse = EvaluateParentheses.condense(formattedUserInput, i + 1);
 
                     if (!evalaluateParenthesesResponse.success)
                         return evalaluateParenthesesResponse;
