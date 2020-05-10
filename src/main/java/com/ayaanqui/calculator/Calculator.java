@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.ayaanqui.calculator.util.ConvertConstants;
 import com.ayaanqui.calculator.util.MathFunctions;
 import com.ayaanqui.calculator.util.EvaluateParentheses;
+import com.ayaanqui.calculator.objects.Response;
 
 public class Calculator {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
@@ -13,24 +14,6 @@ public class Calculator {
     private String userInput;
     private ArrayList<String> formattedUserInput;
     private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
-
-    /**
-     * Static class for handling errors, and holding the correct value if there are
-     * no errors.
-     * 
-     * Usage: set success = false if there was an error trying process the
-     * expression and set error = new String[] {"Example error...", "More errors"}.
-     * If the expression was valid and processed successfully then set success =
-     * true and set result to the processed value.
-     */
-    public static class Response {
-        public boolean success;
-        public double result;
-        public String[] errors;
-
-        public Response() {
-        }
-    }
 
     public Calculator() {
     }
