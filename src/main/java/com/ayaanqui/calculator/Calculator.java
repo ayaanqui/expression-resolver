@@ -91,33 +91,22 @@ public class Calculator {
         userInput = userInput.replaceAll("\\s", "");
         userInput = userInput.replace("$", "");
 
-        StringBuilder tempInput = new StringBuilder(userInput);
         ArrayList<String> formattedList = new ArrayList<>();
-        boolean found = false; // Prevents skipping next char
-
-        for (int i = 0; i < tempInput.length(); i++) {
-            // If found is true set i = 0 this prevents skipping over the next character
-            if (found) {
-                i = 0;
-                found = false;
-            }
-
+        int start = 0;
+        for (int i = 0; i < userInput.length(); i++) {
             for (char operator : operatorList) {
-                if (operator == tempInput.charAt(i)) {
+                if (operator == userInput.charAt(i)) {
                     // Content before operator
-                    String prefix = tempInput.substring(0, i);
+                    String prefix = userInput.substring(start, i);
                     if (prefix.length() > 0)
                         formattedList.add(prefix);
                     formattedList.add(Character.toString(operator));
-
-                    tempInput.delete(0, i + 1); // Delete the rest of the input
-                    i = 0; // Reset i to begining of input
-                    found = true;
+                    start = i + 1;
                     break;
                 }
             }
         }
-        formattedList.add(tempInput.toString());
+        formattedList.add(userInput.substring(start));
 
         // Remove "+" if it is at the begining of the list
         if (formattedList.get(0).equals("+"))
