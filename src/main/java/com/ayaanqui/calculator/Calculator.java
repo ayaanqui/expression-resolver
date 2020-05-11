@@ -14,13 +14,20 @@ public class Calculator {
 
     private String userInput;
     private LinkedList<String> formattedUserInput;
-    private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
+    private ArrayList<String> userHistory;
 
     public Calculator() {
+        formattedUserInput = new LinkedList<>();
+        userHistory = new ArrayList<>();
     }
 
     public void expression(String uInp) {
         this.userInput = uInp;
+        formattedUserInput = new LinkedList<>();
+    }
+
+    public void expressionList(LinkedList<String> subList) {
+        this.formattedUserInput = subList;
     }
 
     public String getUserInput() {
@@ -105,7 +112,9 @@ public class Calculator {
                 }
             }
         }
-        formattedList.add(userInput.substring(start));
+        String remainder = userInput.substring(start);
+        if (!remainder.equals(""))
+            formattedList.add(userInput.substring(start));
 
         // Remove "+" if it is at the begining of the list
         if (formattedList.get(0).equals("+"))
@@ -168,7 +177,9 @@ public class Calculator {
     }
 
     public Response solveExpression() {
-        this.formattedUserInput = formatUserInput();
+        if (formattedUserInput.isEmpty()) {
+            this.formattedUserInput = formatUserInput();
+        }
         Response evalFunctionsResponse = new MathFunctions(formattedUserInput).evaluateFunctions();
         if (evalFunctionsResponse != null) {
             // If Response is not null then Response.success is set to false
