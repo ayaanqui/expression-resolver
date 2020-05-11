@@ -6,8 +6,10 @@ import java.lang.Math;
 import com.ayaanqui.calculator.objects.Response;
 
 public class MathFunctions {
-    private static final String[] advOperatorList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
+    private static final String[] functionsList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
             "arccos", "arctan" };
+    private static final String[] negFunctionsList = { "-sqrt", "-sin", "-cos", "-tan", "-ln", "-abs", "-exp", "-fact",
+            "-arcsin", "-arccos", "-arctan" };
     private ArrayList<String> formattedUserInput;
 
     public MathFunctions(ArrayList<String> formattedUserInput) {
@@ -23,35 +25,28 @@ public class MathFunctions {
         return factorial;
     }
 
-    public void formatFunctions() {
-        /**
-         * "2+sin(x)" is represented as ["2", "+", "sin(", "x", ")"] The loop replaces
-         * "sin(" with "sin" or "ln(" with "ln" etc.. Then adds a ( after sin. eg. ["2",
-         * "+", "sin", "(", "x", ")"]
-         */
-        for (String operator : advOperatorList) {
-            for (int i = 0; i < formattedUserInput.size(); i++) {
-                if (formattedUserInput.get(i).equals(operator + "(")) {
-                    formattedUserInput.set(i, operator);
-                    formattedUserInput.add(i + 1, "(");
-                }
-
-                // Negative functions
-                if (formattedUserInput.get(i).equals("-" + operator + "(")) {
-                    formattedUserInput.set(i, operator);
+    /**
+     * Goes through the all of formattedUserInput to check if a negative functions
+     * is found (using negFunctionsList), add a "-1" and "*" and replaces the
+     * negative function with the equivalent element from functionsList.
+     */
+    public void formatNegativeFunctions() {
+        for (int i = 0; i < formattedUserInput.size(); i++) {
+            for (int j = 0; j < negFunctionsList.length; j++) {
+                if (formattedUserInput.get(i).equals(negFunctionsList[j])) {
+                    formattedUserInput.set(i, functionsList[j]);
                     formattedUserInput.add(i, "-1");
                     formattedUserInput.add(i + 1, "*");
-                    formattedUserInput.add(i + 3, "(");
                 }
             }
         }
     }
 
     public Response evaluateFunctions() {
-        formatFunctions();
+        formatNegativeFunctions();
 
         for (int i = 0; i < formattedUserInput.size(); i++) {
-            for (String operator : advOperatorList) {
+            for (String operator : functionsList) {
                 if (formattedUserInput.get(i).equals(operator)) {
                     // Evaluates [(, x, )] from [sin, (, x, )], leaving us with [sin, x]
                     Response evalaluateParenthesesResponse = EvaluateParentheses.condense(formattedUserInput, i + 1);
