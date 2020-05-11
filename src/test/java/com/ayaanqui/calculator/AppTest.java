@@ -267,16 +267,17 @@ public class AppTest {
         calculator.expression("ln(746+23413.303+(-3855/12)-3+3)");
         assertEquals("10.079038448381066", Double.toString(calculator.solveExpression().result));
 
-        // Will not pass the test...
-        // calculator.setUp("ln(746+23413.303-3855/12-((3+3)-1/2))");
-        // assertEquals("10.078807698219242",
-        // Double.toString(calculator.solveExpression().result));
+        calculator.expression("ln(746+23413.303-3855/12-((3+3)-1/2))");
+        assertEquals("10.078807698219242", Double.toString(calculator.solveExpression().result));
 
         calculator.expression("54/2-(((29+sqrt(2))+sin(pi/3)-1.89*2)/2)/ln(abs(-90))");
         assertEquals("23.94428864986426", Double.toString(calculator.solveExpression().result));
 
         calculator.expression("sin(20)+pi*2");
         assertEquals("7.196130557907214", Double.toString(calculator.solveExpression().result));
+
+        calculator.expression("ln(abs(-90))/(sin(3*pi/56)+fact(6)-33*234.22113454-(sqrt(3)))");
+        assertEquals("-6.418340113298676E-4", Double.toString(calculator.solveExpression().result));
     }
 
     @Test
