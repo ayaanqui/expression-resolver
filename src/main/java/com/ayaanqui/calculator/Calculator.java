@@ -35,7 +35,7 @@ public class Calculator {
      * formattedList [.., "x", "-", "num", ..] returns [.., "x", "+", "-num", ..],
      * where x = ")" or a number. For everything else removes "-" and concatinates
      * "-" to post.
-     * 
+     *
      * @param formattedList
      * @param pre
      * @param op
@@ -66,7 +66,7 @@ public class Calculator {
     /**
      * Converts "<" to the last item from userHistory, and handles elements with
      * "-".
-     * 
+     *
      * @param formattedList
      */
     private void operatorFormatting(ArrayList<String> formattedList) {
@@ -74,9 +74,7 @@ public class Calculator {
             String item = formattedList.get(i);
 
             if (item.equals("-")) {
-                if (!handleNegative(formattedList, i - 1, i, i + 1)) {
-                    System.out.println("There was an error!");
-                }
+                handleNegative(formattedList, i - 1, i, i + 1);
             } else if (item.equals("<")) { // get the the previous answer
                 if (this.userHistory.size() > 0)
                     formattedList.set(i, userHistory.get(userHistory.size() - 1));
