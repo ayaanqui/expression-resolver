@@ -2,6 +2,7 @@ package com.ayaanqui.calculator;
 
 import java.lang.Math;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.ayaanqui.calculator.util.ConvertConstants;
 import com.ayaanqui.calculator.util.MathFunctions;
@@ -12,7 +13,7 @@ public class Calculator {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
 
     private String userInput;
-    private ArrayList<String> formattedUserInput;
+    private LinkedList<String> formattedUserInput;
     private ArrayList<String> userHistory = new ArrayList<>(); // records all the solved expressions
 
     public Calculator() {
@@ -42,7 +43,7 @@ public class Calculator {
      * @param post
      * @return
      */
-    private boolean handleNegative(ArrayList<String> formattedList, int pre, int op, int post) {
+    private boolean handleNegative(LinkedList<String> formattedList, int pre, int op, int post) {
         // When pre >= 0 and pre == ")" or pre is a digit
         if (!(pre < 0) && (formattedList.get(pre).equals(")")
                 || Character.isDigit(formattedList.get(pre).charAt(formattedList.get(pre).length() - 1)))) {
@@ -69,7 +70,7 @@ public class Calculator {
      *
      * @param formattedList
      */
-    private void operatorFormatting(ArrayList<String> formattedList) {
+    private void operatorFormatting(LinkedList<String> formattedList) {
         for (int i = 0; i < formattedList.size(); i++) {
             String item = formattedList.get(i);
 
@@ -84,12 +85,12 @@ public class Calculator {
         }
     }
 
-    public ArrayList<String> formatUserInput() {
+    public LinkedList<String> formatUserInput() {
         // Trim whitespaces and $ signs
         userInput = userInput.replaceAll("\\s", "");
         userInput = userInput.replace("$", "");
 
-        ArrayList<String> formattedList = new ArrayList<>();
+        LinkedList<String> formattedList = new LinkedList<>();
         int start = 0;
         for (int i = 0; i < userInput.length(); i++) {
             for (char operator : operatorList) {

@@ -1,6 +1,6 @@
 package com.ayaanqui.calculator.algorithms;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -22,7 +22,7 @@ public class RelatedParentheses {
      *         parenthesis with it's corresponding closing parenthesis. Key = index
      *         of opening parenthesis, Value = index of closing parenthesis.
      */
-    public static HashMap<Integer, Integer> evaluateRelations(ArrayList<String> formattedList) {
+    public static HashMap<Integer, Integer> evaluateRelations(LinkedList<String> formattedList) {
         Stack<Integer> openingParenthesis = new Stack<>();
         HashMap<Integer, Integer> relationships = new HashMap<>();
 

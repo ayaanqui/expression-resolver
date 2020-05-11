@@ -1,6 +1,6 @@
 package com.ayaanqui.calculator.util;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.HashMap;
 
 import com.ayaanqui.calculator.algorithms.RelatedParentheses;
@@ -11,7 +11,7 @@ public class EvaluateParentheses {
     public EvaluateParentheses() {
     }
 
-    public static Response condense(ArrayList<String> formattedList, int start) {
+    public static Response condense(LinkedList<String> formattedList, int start) {
         HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
 
         if (relatedParentheses.isEmpty()) {

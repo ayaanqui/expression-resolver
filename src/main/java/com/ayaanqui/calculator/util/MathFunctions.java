@@ -1,6 +1,6 @@
 package com.ayaanqui.calculator.util;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.lang.Math;
 
 import com.ayaanqui.calculator.objects.Response;
@@ -10,9 +10,9 @@ public class MathFunctions {
             "arccos", "arctan" };
     private static final String[] negFunctionsList = { "-sqrt", "-sin", "-cos", "-tan", "-ln", "-abs", "-exp", "-fact",
             "-arcsin", "-arccos", "-arctan" };
-    private ArrayList<String> formattedUserInput;
+    private LinkedList<String> formattedUserInput;
 
-    public MathFunctions(ArrayList<String> formattedUserInput) {
+    public MathFunctions(LinkedList<String> formattedUserInput) {
         this.formattedUserInput = formattedUserInput;
     }
 

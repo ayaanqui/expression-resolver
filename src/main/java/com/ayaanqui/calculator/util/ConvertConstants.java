@@ -1,14 +1,14 @@
 package com.ayaanqui.calculator.util;
 
 import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class ConvertConstants {
     private final String[] constants = { "pi", "e", "tau" };
     private HashMap<String, Double> constantMap;
-    private ArrayList<String> userInpList;
+    private LinkedList<String> userInpList;
 
-    public ConvertConstants(ArrayList<String> userInpList) {
+    public ConvertConstants(LinkedList<String> userInpList) {
         this.userInpList = userInpList;
         this.constantMap = new HashMap<>();
 
