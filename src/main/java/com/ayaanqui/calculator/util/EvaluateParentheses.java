@@ -23,19 +23,13 @@ public class EvaluateParentheses {
 
         int end = relatedParentheses.get(start);
 
-        String innerExpression = "";
-
-        // Populate innerExpression with all of the elemnts inside the parentheses
-        for (int t = start + 1; t < end; t++)
-            innerExpression += formattedList.get(t);
+        Calculator newExpression = new Calculator();
+        newExpression.expressionList(new LinkedList<String>(formattedList.subList(start + 1, end)));
+        Response res = newExpression.solveExpression();
 
         // Removing elements from the back, to avoid IndexOutOfBounds Errors
         for (int t = end; t > start; t--)
             formattedList.remove(t);
-
-        Calculator newExpression = new Calculator();
-        newExpression.expression(innerExpression);
-        Response res = newExpression.solveExpression();
 
         if (res.success)
             formattedList.set(start, Double.toString(res.result));
