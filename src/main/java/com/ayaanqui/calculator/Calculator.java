@@ -291,7 +291,7 @@ public class Calculator {
         }
 
         Response res = new Response();
-        if (formattedUserInput.size() >= 1) {
+        if (formattedUserInput.size() == 1) {
             try {
                 userHistory.add(formattedUserInput.get(0));
 
@@ -304,8 +304,6 @@ public class Calculator {
                 return res;
             }
         } else {
-            System.err.println(formattedUserInput);
-
             res.success = false;
             res.errors = new String[] { "Could not resolve expression" };
             return res;
