@@ -45,14 +45,14 @@ public class Calculator {
      * "-" to post.
      *
      * @param formattedList
-     * @param pre
-     * @param op
-     * @param post
-     * @return
+     * @param pre           Left hand side opperand
+     * @param op            Operator. Assumes the value at index is "-"
+     * @param post          Right hand side opperand
+     * @return if processed correctly true, else false
      */
     private boolean handleNegative(LinkedList<String> formattedList, int pre, int op, int post) {
         // When pre >= 0 and pre == ")" or pre is a digit
-        if (!(pre < 0) && (formattedList.get(pre).equals(")")
+        if (pre >= 0 && (formattedList.get(pre).equals(")")
                 || Character.isDigit(formattedList.get(pre).charAt(formattedList.get(pre).length() - 1)))) {
             if (op < formattedList.size() - 1 && post < formattedList.size()) {
                 formattedList.set(post, '-' + formattedList.get(post));
