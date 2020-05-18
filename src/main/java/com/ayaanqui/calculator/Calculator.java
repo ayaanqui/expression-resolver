@@ -187,49 +187,29 @@ public class Calculator {
             return evalFunctionsResponse;
         }
 
-        /**
-         * Set condense to first element of formattedUserInput, in case the user enters
-         * a number, constant, etc. This avoids returning a 0 if the user enters, e.g.
-         * sqrt(2)
-         */
-        double condense;
-        try {
-            condense = Double.parseDouble(formattedUserInput.get(0));
-        } catch (NumberFormatException e) {
-            condense = 0.0;
-        }
+        Response res = new Response();
 
         // Perform parentheses before everything
         for (int i = 0; i < formattedUserInput.size() - 1; i++) {
-            if (formattedUserInput.get(i).equals("-(")) {
-                formattedUserInput.add(i, "-1.0");
-                formattedUserInput.add(i + 1, "*");
-                formattedUserInput.set(i + 2, "(");
-
-                i = i + 2;
-            }
-
             if (formattedUserInput.get(i).equals("(")) {
-                Response res = EvaluateParentheses.condense(formattedUserInput, i);
+                res = EvaluateParentheses.condense(formattedUserInput, i);
                 if (!res.success)
                     return res;
-                i = 0;
+                i--;
             }
         }
 
         // Perform Exponents only after all parentheses have been evaluated
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("^")) {
-                Response res = condenseExpression('^', i);
+                res = condenseExpression('^', i);
                 if (!res.success)
                     return res;
-                condense = res.result;
 
                 formattedUserInput.remove(i + 1); // Remove number before operation
                 formattedUserInput.remove(i); // Remove operation
-                formattedUserInput.set(i - 1, condense + ""); // Change number after operation to condensed form
-
-                i = 0;
+                formattedUserInput.set(i - 1, Double.toString(res.result));
+                i--;
             }
         }
 
@@ -237,31 +217,26 @@ public class Calculator {
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("*") || formattedUserInput.get(i).equals("/")) {
                 if (formattedUserInput.get(i).equals("*")) {
-                    Response res = condenseExpression('*', i);
+                    res = condenseExpression('*', i);
                     if (!res.success)
                         return res;
-                    condense = res.result;
                 }
 
                 if (formattedUserInput.get(i).equals("/")) {
-                    Response res = condenseExpression('/', i);
+                    res = condenseExpression('/', i);
                     if (!res.success)
                         return res;
-                    condense = res.result;
 
-                    if (Double.isInfinite(condense)) {
-                        res = new Response();
-                        res.success = false;
-                        res.errors = new String[] { "Could not divide by zero" };
+                    if (Double.isInfinite(res.result)) {
+                        res = Response.getError(new String[] { "Could not divide by zero" });
                         return res;
                     }
                 }
 
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
-                formattedUserInput.set(i - 1, condense + ""); // change number after operation to condensed form
-
-                i = 0;
+                formattedUserInput.set(i - 1, Double.toString(res.result));
+                i--;
             }
         }
 
@@ -269,44 +244,33 @@ public class Calculator {
         for (int i = 1; i < formattedUserInput.size(); i++) {
             if (formattedUserInput.get(i).equals("+") || formattedUserInput.get(i).equals("-")) {
                 if (formattedUserInput.get(i).equals("+")) {
-                    Response res = condenseExpression('+', i);
+                    res = condenseExpression('+', i);
                     if (!res.success)
                         return res;
-                    condense = res.result;
                 }
 
                 if (formattedUserInput.get(i).equals("-")) {
-                    Response res = condenseExpression('-', i);
+                    res = condenseExpression('-', i);
                     if (!res.success)
                         return res;
-                    condense = res.result;
                 }
 
                 formattedUserInput.remove(i + 1); // remove number before operation
                 formattedUserInput.remove(i); // remove operation
-                formattedUserInput.set(i - 1, condense + ""); // change number after operation to condensed form
-
-                i = 0;
+                formattedUserInput.set(i - 1, Double.toString(res.result));
+                i--;
             }
         }
 
-        Response res = new Response();
         if (formattedUserInput.size() == 1) {
             try {
                 userHistory.add(formattedUserInput.get(0));
-
-                res.result = Double.parseDouble(formattedUserInput.get(0));
-                res.success = true;
-                return res;
+                return Response.getSuccess(Double.parseDouble(formattedUserInput.get(0)));
             } catch (Exception e) {
-                res.success = false;
-                res.errors = new String[] { "Not a number", "Error parsing input" };
-                return res;
+                return Response.getError(new String[] { "Not a number", "Error parsing input" });
             }
         } else {
-            res.success = false;
-            res.errors = new String[] { "Could not resolve expression" };
-            return res;
+            return Response.getError(new String[] { "Could not resolve expression" });
         }
     }
 
