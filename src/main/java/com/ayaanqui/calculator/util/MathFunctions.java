@@ -8,8 +8,6 @@ import com.ayaanqui.calculator.objects.Response;
 public class MathFunctions {
     private static final String[] functionsList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
             "arccos", "arctan" };
-    private static final String[] negFunctionsList = { "-sqrt", "-sin", "-cos", "-tan", "-ln", "-abs", "-exp", "-fact",
-            "-arcsin", "-arccos", "-arctan" };
     private LinkedList<String> formattedUserInput;
 
     public MathFunctions(LinkedList<String> formattedUserInput) {
@@ -25,26 +23,7 @@ public class MathFunctions {
         return factorial;
     }
 
-    /**
-     * Goes through the all of formattedUserInput to check if a negative functions
-     * is found (using negFunctionsList), add a "-1" and "*" and replaces the
-     * negative function with the equivalent element from functionsList.
-     */
-    public void formatNegativeFunctions() {
-        for (int i = 0; i < formattedUserInput.size(); i++) {
-            for (int j = 0; j < negFunctionsList.length; j++) {
-                if (formattedUserInput.get(i).equals(negFunctionsList[j])) {
-                    formattedUserInput.set(i, functionsList[j]);
-                    formattedUserInput.add(i, "-1");
-                    formattedUserInput.add(i + 1, "*");
-                }
-            }
-        }
-    }
-
     public Response evaluateFunctions() {
-        formatNegativeFunctions();
-
         for (int i = 0; i < formattedUserInput.size(); i++) {
             for (String operator : functionsList) {
                 if (formattedUserInput.get(i).equals(operator)) {

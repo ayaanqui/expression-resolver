@@ -51,21 +51,38 @@ public class Calculator {
      * @return if processed correctly true, else false
      */
     private boolean handleNegative(LinkedList<String> formattedList, int pre, int op, int post) {
-        // When pre >= 0 and pre == ")" or pre is a digit
-        if (pre >= 0 && (formattedList.get(pre).equals(")")
-                || Character.isDigit(formattedList.get(pre).charAt(formattedList.get(pre).length() - 1)))) {
-            if (op < formattedList.size() - 1 && post < formattedList.size()) {
-                formattedList.set(post, '-' + formattedList.get(post));
-                formattedList.set(op, "+");
-                return true;
-            }
+        if (op >= formattedList.size() && post >= formattedList.size())
             return false;
+
+        if (pre >= 0 && Character.isDigit(formattedList.get(pre).charAt(0))
+                && Character.isDigit(formattedList.get(post).charAt(0)))
+            return true;
+
+        // When pre >= 0 and the value at pre == ")"
+        if (pre >= 0 && formattedList.get(pre).equals(")")) {
+            formattedList.set(op, "+");
+            formattedList.add(op + 1, "-1");
+            formattedList.add(op + 2, "*");
+            return true;
         }
 
         // Concatinates op with post, then removes op
         if (op >= 0 && post >= 1 && post < formattedList.size()) {
-            formattedList.set(post, '-' + formattedList.get(post));
-            formattedList.remove(op);
+            if (Character.isDigit(formattedList.get(post).charAt(0))) {
+                formattedList.set(post, '-' + formattedList.get(post));
+                formattedList.remove(op);
+                return true;
+            }
+            // If post is not a number it could be an opening parethesis or a function
+            // In this case add [.., "-1", "*", ..] in front
+            if (pre >= 0) {
+                formattedList.set(op, "+");
+                formattedList.add(op + 1, "-1");
+                formattedList.add(op + 2, "*");
+            } else {
+                formattedList.set(op, "-1");
+                formattedList.add(op + 1, "*");
+            }
             return true;
         }
         return false;

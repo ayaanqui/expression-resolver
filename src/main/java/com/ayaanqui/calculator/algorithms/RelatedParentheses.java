@@ -27,7 +27,7 @@ public class RelatedParentheses {
         HashMap<Integer, Integer> relationships = new HashMap<>();
 
         for (int i = 0; i < formattedList.size(); i++) {
-            if (formattedList.get(i).equals("(") || formattedList.get(i).equals("-(")) {
+            if (formattedList.get(i).equals("(")) {
                 openingParenthesis.push(i);
             } else if (formattedList.get(i).equals(")") && openingParenthesis.size() > 0) {
                 relationships.put(openingParenthesis.pop(), i);
