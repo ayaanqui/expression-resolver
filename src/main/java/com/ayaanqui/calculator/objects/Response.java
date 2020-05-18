@@ -19,6 +19,20 @@ public class Response {
     public Response() {
     }
 
+    public static Response getSuccess(double result) {
+        Response res = new Response();
+        res.success = true;
+        res.result = result;
+        return res;
+    }
+
+    public static Response getError(String[] errors) {
+        Response res = new Response();
+        res.success = false;
+        res.errors = errors;
+        return res;
+    }
+
     public String toString() {
         return (success) ? Double.toString(this.result) : Arrays.toString(this.errors);
     }
