@@ -280,12 +280,14 @@ public class Calculator {
         }
 
         if (formattedUserInput.size() == 1) {
+            double expression;
             try {
-                userHistory.add(formattedUserInput.get(0));
-                return Response.getSuccess(Double.parseDouble(formattedUserInput.get(0)));
+                expression = Double.parseDouble(formattedUserInput.get(0));
             } catch (Exception e) {
                 return Response.getError(new String[] { "Not a number", "Error parsing input" });
             }
+            userHistory.add(Double.toString(expression));
+            return Response.getSuccess(expression);
         } else {
             return Response.getError(new String[] { "Could not resolve expression" });
         }
