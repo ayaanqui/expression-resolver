@@ -20,9 +20,7 @@ public class App {
             if (userInput.equals("exit") || userInput.equals("quit"))
                 break;
 
-            if (userInput.equals("")) {
-                System.out.println(" *Input cannot be left blank");
-            } else if (userInput.toLowerCase().equals("history")) {
+            if (userInput.toLowerCase().equals("history")) {
                 ArrayList<String> history = calc.getUserHistory();
                 if (!history.isEmpty()) {
                     for (String item : history)

@@ -129,9 +129,13 @@ public class Calculator {
                 }
             }
         }
+
+        if (userInput.equals(""))
+            return formattedList;
+
         String remainder = userInput.substring(start);
         if (!remainder.equals(""))
-            formattedList.add(userInput.substring(start));
+            formattedList.add(remainder);
 
         // Remove "+" if it is at the begining of the list
         if (formattedList.get(0).equals("+"))
@@ -197,6 +201,10 @@ public class Calculator {
         if (formattedUserInput.isEmpty()) {
             this.formattedUserInput = formatUserInput();
         }
+
+        if (formattedUserInput.isEmpty())
+            return Response.getError(new String[] { "Input cannot be left blank" });
+
         Response evalFunctionsResponse = new MathFunctions(formattedUserInput).evaluateFunctions();
         if (evalFunctionsResponse != null) {
             // If Response is not null then Response.success is set to false
