@@ -13,7 +13,6 @@ public class App {
         String userInput;
 
         while (true) {
-
             System.out.print(">> ");
             userInput = keyboard.nextLine();
             userInput = userInput.toLowerCase();
@@ -21,7 +20,9 @@ public class App {
             if (userInput.equals("exit") || userInput.equals("quit"))
                 break;
 
-            if (userInput.toLowerCase().equals("history")) {
+            if (userInput.equals("")) {
+                System.out.println(" *Input cannot be left blank");
+            } else if (userInput.toLowerCase().equals("history")) {
                 ArrayList<String> history = calc.getUserHistory();
                 if (!history.isEmpty()) {
                     for (String item : history)
@@ -42,7 +43,6 @@ public class App {
             }
 
             System.out.println();
-
         }
         keyboard.close();
     }
