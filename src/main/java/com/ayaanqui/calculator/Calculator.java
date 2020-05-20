@@ -51,7 +51,7 @@ public class Calculator {
      * @return if processed correctly true, else false
      */
     private boolean handleNegative(LinkedList<String> formattedList, int pre, int op, int post) {
-        if (op >= formattedList.size() && post >= formattedList.size())
+        if (op >= formattedList.size() || post >= formattedList.size())
             return false;
 
         if (pre >= 0 && Character.isDigit(formattedList.get(pre).charAt(0))
@@ -149,27 +149,18 @@ public class Calculator {
 
     private Response catchNumberException(String elem) {
         double result;
-        Response res = new Response();
-
         try {
             result = Double.parseDouble(elem); // value of i-1
         } catch (NumberFormatException e) {
-            res.success = false;
-            res.errors = new String[] { "Operator requires two numbers" };
-            return res;
+            return Response.getError(new String[] { "Operator requires two numbers" });
         }
-        res.success = true;
-        res.result = result;
-        return res;
+        return Response.getSuccess(result);
     }
 
     public Response condenseExpression(char operator, int i) {
         // Check to see if (i-1) and (i-1) are within the bounds of formattedUserInput
         if (i - 1 < 0 || i + 1 >= formattedUserInput.size()) {
-            Response res = new Response();
-            res.success = false;
-            res.errors = new String[] { "Operator requires two numbers" };
-            return res;
+            return Response.getError(new String[] { "Operator requires two numbers" });
         }
 
         Response x = catchNumberException(formattedUserInput.get(i - 1));
@@ -191,10 +182,8 @@ public class Calculator {
             output = x.result - y.result;
         else if (operator == '+')
             output = x.result + y.result;
-        Response res = new Response();
-        res.success = true;
-        res.result = output;
-        return res;
+
+        return Response.getSuccess(output);
     }
 
     public Response solveExpression() {
