@@ -213,7 +213,6 @@ public class Calculator {
         }
 
         Response res = new Response();
-
         // Perform parentheses before everything
         for (int i = 0; i < formattedUserInput.size() - 1; i++) {
             if (formattedUserInput.get(i).equals("(")) {
@@ -224,66 +223,26 @@ public class Calculator {
             }
         }
 
-        // Perform Exponents only after all parentheses have been evaluated
-        for (int i = 1; i < formattedUserInput.size(); i++) {
-            if (formattedUserInput.get(i).equals("^")) {
-                res = condenseExpression('^', i);
-                if (!res.success)
-                    return res;
+        final char[][] orderOfOperations = new char[][] { { '^' }, { '*', '/' }, { '+', '-' } };
+        for (char[] operators : orderOfOperations) {
+            for (int i = 1; i < formattedUserInput.size(); i++) {
+                char inputOp = formattedUserInput.get(i).charAt(0);
 
-                formattedUserInput.remove(i + 1); // Remove number before operation
-                formattedUserInput.remove(i); // Remove operation
-                formattedUserInput.set(i - 1, Double.toString(res.result));
-                i--;
-            }
-        }
+                for (char op : operators) {
+                    if (op == inputOp) {
+                        res = condenseExpression(op, i);
+                        if (!res.success)
+                            return res;
 
-        // Perform multiplication/division before addition/subtraction
-        for (int i = 1; i < formattedUserInput.size(); i++) {
-            if (formattedUserInput.get(i).equals("*") || formattedUserInput.get(i).equals("/")) {
-                if (formattedUserInput.get(i).equals("*")) {
-                    res = condenseExpression('*', i);
-                    if (!res.success)
-                        return res;
-                }
+                        if (op == '/' && Double.isInfinite(res.result))
+                            return Response.getError(new String[] { "Could not divide by zero" });
 
-                if (formattedUserInput.get(i).equals("/")) {
-                    res = condenseExpression('/', i);
-                    if (!res.success)
-                        return res;
-
-                    if (Double.isInfinite(res.result)) {
-                        res = Response.getError(new String[] { "Could not divide by zero" });
-                        return res;
+                        formattedUserInput.remove(i + 1); // Remove rhs operand
+                        formattedUserInput.remove(i); // Remove operator
+                        formattedUserInput.set(i - 1, Double.toString(res.result));
+                        i--;
                     }
                 }
-
-                formattedUserInput.remove(i + 1); // remove number before operation
-                formattedUserInput.remove(i); // remove operation
-                formattedUserInput.set(i - 1, Double.toString(res.result));
-                i--;
-            }
-        }
-
-        // Perform addition/subtraction after everything else
-        for (int i = 1; i < formattedUserInput.size(); i++) {
-            if (formattedUserInput.get(i).equals("+") || formattedUserInput.get(i).equals("-")) {
-                if (formattedUserInput.get(i).equals("+")) {
-                    res = condenseExpression('+', i);
-                    if (!res.success)
-                        return res;
-                }
-
-                if (formattedUserInput.get(i).equals("-")) {
-                    res = condenseExpression('-', i);
-                    if (!res.success)
-                        return res;
-                }
-
-                formattedUserInput.remove(i + 1); // remove number before operation
-                formattedUserInput.remove(i); // remove operation
-                formattedUserInput.set(i - 1, Double.toString(res.result));
-                i--;
             }
         }
 
@@ -299,9 +258,5 @@ public class Calculator {
         } else {
             return Response.getError(new String[] { "Could not resolve expression" });
         }
-    }
-
-    public String toString() {
-        return solveExpression() + "";
     }
 }
