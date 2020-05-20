@@ -1,6 +1,6 @@
 # Java Console Calculator
 
-This program takes in a user input as a string, parses the expression, and reduces the expression to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified. _(Note: The program escapes \_all_ whitespaces and `$` signs)\_
+This program takes in a user input as a string, parses the expression, and reduces the expression to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified. _(Note: The program escapes all whitespaces and `$` signs)_
 
 ## Usage
 
