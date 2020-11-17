@@ -79,9 +79,6 @@ mvn package
 _This makes a folder named `target` in the project root, containing the `.jar` and `.class` files._
 
 ## Run
-
-First, `cd` into the project directory
-
 ```
-java -cp target/Calculator-1.0-SNAPSHOT.jar com.ayaanqui.calculator.App
+mvn exec:java
 ```
