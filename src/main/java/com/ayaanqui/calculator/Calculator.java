@@ -3,6 +3,7 @@ package com.ayaanqui.calculator;
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.TreeMap;
 
 import com.ayaanqui.calculator.util.ConvertConstants;
 import com.ayaanqui.calculator.util.MathFunctions;
@@ -10,15 +11,17 @@ import com.ayaanqui.calculator.util.EvaluateParentheses;
 import com.ayaanqui.calculator.objects.Response;
 
 public class Calculator {
-    private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<' };
+    private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<', '=' };
 
     private String userInput;
     private LinkedList<String> formattedUserInput;
     private ArrayList<String> userHistory;
+    private TreeMap<String, Double> variableMap;
 
     public Calculator() {
         formattedUserInput = new LinkedList<>();
         userHistory = new ArrayList<>();
+        variableMap = new TreeMap<>();
     }
 
     public void expression(String uInp) {
@@ -141,7 +144,10 @@ public class Calculator {
         if (formattedList.get(0).equals("+"))
             formattedList.remove(0);
 
-        new ConvertConstants(formattedList).convert();
+        ConvertConstants cOb = new ConvertConstants(formattedList);
+        cOb.addConstantMap(this.variableMap);
+        cOb.convert();
+
         operatorFormatting(formattedList);
 
         return formattedList;
@@ -163,8 +169,27 @@ public class Calculator {
             return Response.getError(new String[] { "Operator requires two numbers" });
         }
 
-        Response x = catchNumberException(formattedUserInput.get(i - 1));
+        String lhs = formattedUserInput.get(i - 1);
+        Response x = catchNumberException(lhs);
         Response y = catchNumberException(formattedUserInput.get(i + 1));
+
+        // Handle variables
+        if (operator == '=') {
+            // x cannot start with a number
+            if (!x.success) {
+                x.success = true;
+                x.errors = new String[0];
+            } else {
+                x.success = false;
+                x.errors = new String[] { "Variable name cannot start with a number" };
+            }
+
+            // y must be a number
+            if (!y.success) {
+                y.success = false;
+                y.errors = new String[] { "Variable value must be a number" };
+            }
+        }
 
         if (!x.success)
             return x;
@@ -182,6 +207,10 @@ public class Calculator {
             output = x.result - y.result;
         else if (operator == '+')
             output = x.result + y.result;
+        else if (operator == '=') {
+            this.variableMap.put(lhs, y.result);
+            output = y.result;
+        }
 
         return Response.getSuccess(output);
     }
@@ -212,7 +241,7 @@ public class Calculator {
             }
         }
 
-        final char[][] orderOfOperations = new char[][] { { '^' }, { '*', '/' }, { '+', '-' } };
+        final char[][] orderOfOperations = new char[][] { { '^' }, { '*', '/' }, { '+', '-' }, { '=' } };
         for (char[] operators : orderOfOperations) {
             for (int i = 1; i < formattedUserInput.size(); i++) {
                 char inputOp = formattedUserInput.get(i).charAt(0);
