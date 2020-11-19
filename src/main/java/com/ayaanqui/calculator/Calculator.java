@@ -181,7 +181,8 @@ public class Calculator {
                 x.errors = new String[0];
             } else {
                 x.success = false;
-                x.errors = new String[] { "Variable name cannot start with a number" };
+                x.errors = new String[] { "Variable names cannot start with a number",
+                        "Variables cannot be reassigned" };
             }
 
             // y must be a number
