@@ -4,6 +4,7 @@ This program takes in a user input as a string, parses the expression, and reduc
 
 ## Usage
 
+Example with mixed operations
 ```
 >> 2+2
 4.0
@@ -15,7 +16,7 @@ This program takes in a user input as a string, parses the expression, and reduc
 7.196130557907214
 ```
 
-You can access the previous answer by using `<` inside the expression
+Access last result by using `<`
 
 ```
 >> -pi^2
@@ -25,7 +26,7 @@ You can access the previous answer by using `<` inside the expression
 11.869604401089358
 ```
 
-This calculator also supports any amount of nested parentheses, with support for detecting mismatching pairs
+Nested parentheses, with support for detecting mismatching pairs
 
 ```
 >> 1+((((((((((((1-1))))+2+2))))))))
@@ -38,6 +39,24 @@ This calculator also supports any amount of nested parentheses, with support for
  *Parentheses mismatch
 ```
 
+Variables assigned using the `=` operator. (_Note: once a variable is assigned, the value cannot be changed_)
+
+```
+>> force = 10*16.46
+164.60000000000002
+
+>> force + pi
+167.7415926535898
+
+>> 1 = 2
+ *Variable names cannot start with a number
+ *Variables cannot be reassigned
+
+>> pi = 3.142
+ *Variable names cannot start with a number
+ *Variables cannot be reassigned
+```
+
 ### Supported math operators
 
 1. Addition: `+`
@@ -47,7 +66,7 @@ This calculator also supports any amount of nested parentheses, with support for
 5. Exponent: `^`
 6. Parentheses: `(` and `)`
 
-**_\*Note:_** Numbers/Constants followed directly by `(` sign do not get identified as multiplication. Therefore, they must be shown explicitly (Ex. use `2*(1+1)` instead of `2(1+1)`). However, this is not the case if a `-` sign is followed by `(`, `-(2*1)` is equivalent to `-1*(2*1)`.
+**_\*Note:_** Numbers/Variables followed directly by `(` sign do not get identified as multiplication. Therefore, they must be shown explicitly (Ex. use `2*(1+1)` instead of `2(1+1)`). However, this is not the case if a `-` sign is followed by `(`, `-(2*1)` is equivalent to `-1*(2*1)`.
 
 ### Supported math functions
 
@@ -76,9 +95,16 @@ _All constants can be used directly, without the need of any parameters_
 mvn package
 ```
 
-_This makes a folder named `target` in the project root, containing the `.jar` and `.class` files._
-
 ## Run
 ```
 mvn exec:java
+```
+
+## Create executable jar file
+
+```
+mvn clean compile assembly:single
+```
+```
+java -jar ./target/Calculator-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```
