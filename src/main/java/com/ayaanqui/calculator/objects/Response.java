@@ -1,5 +1,6 @@
 package com.ayaanqui.calculator.objects;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -11,13 +12,12 @@ import java.util.Arrays;
  * If the expression was valid and processed successfully then set success =
  * true and set result to the processed value.
  */
-public class Response {
+public class Response implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     public boolean success;
     public double result;
     public String[] errors;
-
-    public Response() {
-    }
 
     public static Response getSuccess(double result) {
         Response res = new Response();
