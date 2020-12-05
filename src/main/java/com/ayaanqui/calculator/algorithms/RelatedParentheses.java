@@ -11,9 +11,6 @@ import java.util.Stack;
  * closing parenthesis is not provided then return an empty HashMap.
  */
 public class RelatedParentheses {
-    public RelatedParentheses() {
-    }
-
     /**
      * Finds the corresponding closing parenthesis of every opening parenthesis
      * 
@@ -27,19 +24,18 @@ public class RelatedParentheses {
         HashMap<Integer, Integer> relationships = new HashMap<>();
 
         for (int i = 0; i < formattedList.size(); i++) {
-            if (formattedList.get(i).equals("(")) {
+            char c = formattedList.get(i).charAt(0);
+            if (c == '(') {
                 openingParenthesis.push(i);
-            } else if (formattedList.get(i).equals(")") && openingParenthesis.size() > 0) {
+            } else if (c == ')' && openingParenthesis.size() > 0) {
                 relationships.put(openingParenthesis.pop(), i);
             }
         }
 
         if (openingParenthesis.empty())
             return relationships;
-        else {
-            // If the stack is not empty then we have opening parentheses
-            // that have no pair, so return empty map
-            return new HashMap<Integer, Integer>();
-        }
+        // If the stack is not empty then we have still have unmatched parentheses
+        // So return empty HashMap
+        return new HashMap<Integer, Integer>();
     }
 }
