@@ -8,18 +8,11 @@ import com.ayaanqui.calculator.objects.Response;
 import com.ayaanqui.calculator.Calculator;
 
 public class EvaluateParentheses {
-    public EvaluateParentheses() {
-    }
-
     public static Response condense(LinkedList<String> formattedList, int start) {
         HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
 
-        if (relatedParentheses.isEmpty()) {
-            Response res = new Response();
-            res.success = false;
-            res.errors = new String[] { "Parentheses mismatch" };
-            return res;
-        }
+        if (relatedParentheses.isEmpty())
+            return Response.getError(new String[] { "Parentheses mismatch" });
 
         int end = relatedParentheses.get(start);
 
