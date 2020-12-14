@@ -1,9 +1,44 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ayaanqui</groupId>
+    <groupId>com.ayaanqui.calculator</groupId>
     <artifactId>calculator</artifactId>
     <version>2.0</version>
+
+    <name>Example Application</name>
+    <description>Console based calculator that reduces any valid mathematical string expression to a single value.</description>
+    <url>https://github.com/ayaanqui/java-console-calculator</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Ayaan Siddiqui</name>
+            <email>moahammedayaan.dev@gmail.com</email>
+            <organization>Self</organization>
+            <organizationUrl>https://ayaanqui.com</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/ayaanqui/java-console-calculator.git</connection>
+        <developerConnection>scm:git:ssh://github.com:ayaanqui/java-console-calculator.git</developerConnection>
+        <url>http://github.com/ayaanqui/java-console-calculator/tree/master</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>ayaanqui.calculator</id>
+            <name>Java Console Calculator</name>
+            <url>http://github.com/ayaanqui/java-console-calculator</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
