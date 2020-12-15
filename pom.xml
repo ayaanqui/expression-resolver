@@ -5,7 +5,7 @@
     <artifactId>expression-resolver</artifactId>
     <version>2.0</version>
 
-    <name>Example Application</name>
+    <name>Expression Resolver</name>
     <description>String based math expression resolver for Java.</description>
     <url>https://github.com/ayaanqui/expression-resolver</url>
 
@@ -30,14 +30,6 @@
         <developerConnection>scm:git:ssh://github.com:ayaanqui/expression-resolver.git</developerConnection>
         <url>http://github.com/ayaanqui/expression-resolver/tree/master</url>
     </scm>
-
-    <distributionManagement>
-        <repository>
-            <id>ayaanqui.calculator</id>
-            <name>Java Console Calculator</name>
-            <url>http://github.com/ayaanqui/expression-resolver</url>
-        </repository>
-    </distributionManagement>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -113,39 +105,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- exec:java -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.1</version>
-                <executions>
-                    <execution>
-                        <id>my-exec-java</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.github.ayaanqui.ExpressionResolver.App</mainClass>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>com.github.ayaanqui.ExpressionResolver.App</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
             </plugin>
         </plugins>
     </build>
