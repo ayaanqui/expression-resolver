@@ -1,7 +1,6 @@
 package com.github.ayaanqui.ExpressionResolver;
 
 import java.lang.Math;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
@@ -15,12 +14,11 @@ public class Resolver {
 
     private String userInput;
     private LinkedList<String> formattedUserInput;
-    private ArrayList<String> userHistory;
+    private Double lastResult = null;
     private TreeMap<String, Double> variableMap;
 
     public Resolver() {
         formattedUserInput = new LinkedList<>();
-        userHistory = new ArrayList<>();
         variableMap = new TreeMap<>();
 
         // Define constants
@@ -42,8 +40,8 @@ public class Resolver {
         return userInput;
     }
 
-    public ArrayList<String> getUserHistory() {
-        return userHistory;
+    public double getLastResult() {
+        return lastResult;
     }
 
     /**
@@ -109,8 +107,8 @@ public class Resolver {
             if (item.equals("-")) {
                 handleNegative(formattedList, i - 1, i, i + 1);
             } else if (item.equals("<")) { // get the the previous answer
-                if (this.userHistory.size() > 0)
-                    formattedList.set(i, userHistory.get(userHistory.size() - 1));
+                if (lastResult != null)
+                    formattedList.set(i, lastResult.toString());
                 else
                     formattedList.set(i, "0");
             }
@@ -273,7 +271,7 @@ public class Resolver {
             } catch (Exception e) {
                 return Response.getError(new String[] { "Not a number", "Error parsing input" });
             }
-            userHistory.add(Double.toString(expression));
+            lastResult = expression;
             return Response.getSuccess(expression);
         } else {
             return Response.getError(new String[] { "Could not resolve expression" });
