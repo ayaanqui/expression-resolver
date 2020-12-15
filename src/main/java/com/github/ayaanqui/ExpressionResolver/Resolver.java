@@ -22,6 +22,11 @@ public class Resolver {
         formattedUserInput = new LinkedList<>();
         userHistory = new ArrayList<>();
         variableMap = new TreeMap<>();
+
+        // Define constants
+        variableMap.put("pi", Math.PI);
+        variableMap.put("e", Math.E);
+        variableMap.put("tau", 2 * Math.PI);
     }
 
     public void setExpression(String uInp) {
@@ -144,8 +149,7 @@ public class Resolver {
         if (formattedList.get(0).equals("+"))
             formattedList.remove(0);
 
-        ConvertConstants cOb = new ConvertConstants(formattedList);
-        cOb.addConstantMap(this.variableMap);
+        ConvertConstants cOb = new ConvertConstants(formattedList, variableMap);
         cOb.convert();
 
         operatorFormatting(formattedList);

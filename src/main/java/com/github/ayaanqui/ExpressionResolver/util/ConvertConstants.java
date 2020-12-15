@@ -8,18 +8,9 @@ public class ConvertConstants {
     private TreeMap<String, Double> constantMap;
     private LinkedList<String> userInpList;
 
-    public ConvertConstants(LinkedList<String> userInpList) {
+    public ConvertConstants(LinkedList<String> userInpList, TreeMap<String, Double> variableMap) {
         this.userInpList = userInpList;
-        this.constantMap = new TreeMap<>();
-
-        // Define constants
-        constantMap.put("pi", Math.PI);
-        constantMap.put("e", Math.E);
-        constantMap.put("tau", 2 * Math.PI);
-    }
-
-    public void addConstantMap(TreeMap<String, Double> map) {
-        constantMap.putAll(map);
+        this.constantMap = variableMap;
     }
 
     public void convert() {
