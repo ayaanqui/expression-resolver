@@ -7,7 +7,8 @@ import com.github.ayaanqui.ExpressionResolver.objects.Response;
 import java.lang.Math;
 
 public class MathFunctions {
-    private static final String[] functionsList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
+    private static final String[] functionsList = { "sqrt", "sin", "cos", "tan", "ln", "deg", "abs", "exp", "fact",
+            "arcsin",
             "arccos", "arctan" };
     private LinkedList<String> formattedUserInput;
 
@@ -50,6 +51,9 @@ public class MathFunctions {
                             break;
                         case "ln": // Natural Log (base e) function
                             formattedUserInput.set(i, Math.log(x) + "");
+                            break;
+                        case "deg": // Natural Log (base e) function
+                            formattedUserInput.set(i, Double.toString(Math.toDegrees(x)));
                             break;
                         case "abs": // Absolute
                             formattedUserInput.set(i, Math.abs(x) + "");
