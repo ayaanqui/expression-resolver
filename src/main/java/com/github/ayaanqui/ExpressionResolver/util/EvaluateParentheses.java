@@ -17,6 +17,10 @@ public class EvaluateParentheses {
 
         int end = relatedParentheses.get(start);
 
+        // Check if the pair contains a subexpression
+        if (start + 1 == end)
+            return Response.getError(new String[] { "Input cannot be left blank" });
+
         Expression newExpression = new Expression();
         newExpression.expressionList(new LinkedList<String>(formattedList.subList(start + 1, end)));
         Response res = newExpression.solveExpression();
