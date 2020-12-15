@@ -1,5 +1,7 @@
 # Expression Resolver
 
+[![](https://jitpack.io/v/ayaanqui/expression-resolver.svg)](https://jitpack.io/#ayaanqui/expression-resolver) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![HitCount](http://hits.dwyl.com/{username}/{project-name}.svg)](http://hits.dwyl.com/ayaanqui/expression-resolver)
+
 The Expression Resolver for Java provides a very easy way to solve any valid mathematical expression. The string based expression is parsed, and then reduced to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified.  _(Note: The program escapes all whitespaces and `$` signs)_
 
 ## Usage (as a Maven package)
