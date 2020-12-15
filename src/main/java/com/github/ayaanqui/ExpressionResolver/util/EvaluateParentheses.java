@@ -2,7 +2,7 @@ package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.LinkedList;
 
-import com.github.ayaanqui.ExpressionResolver.ExpressionResolver;
+import com.github.ayaanqui.ExpressionResolver.Expression;
 import com.github.ayaanqui.ExpressionResolver.algorithms.RelatedParentheses;
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 
@@ -17,7 +17,7 @@ public class EvaluateParentheses {
 
         int end = relatedParentheses.get(start);
 
-        ExpressionResolver newExpression = new ExpressionResolver();
+        Expression newExpression = new Expression();
         newExpression.expressionList(new LinkedList<String>(formattedList.subList(start + 1, end)));
         Response res = newExpression.solveExpression();
 

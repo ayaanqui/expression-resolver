@@ -10,7 +10,7 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) throws IOException {
         Scanner keyboard = new Scanner(System.in);
-        ExpressionResolver calc = new ExpressionResolver();
+        Expression calc = new Expression();
         String userInput;
 
         while (true) {
@@ -30,7 +30,7 @@ public class App {
                     System.out.println("Your history is empty :(");
                 }
             } else {
-                calc.expression(userInput);
+                calc.setExpression(userInput);
                 Response res = calc.solveExpression();
 
                 if (res.success)

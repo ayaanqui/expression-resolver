@@ -4,17 +4,23 @@ The Expression Resolver for Java provides a very easy way to solve any valid mat
 
 ## Usage (as a Maven package)
 ```java
-// Create ExpressionResolver object
-ExpressionResolver calculator = new ExpressionResolver();
+import com.github.ayaanqui.ExpressionResolver.Expression;
 
-calculator.expression("1+1 - sin( pi*exp(2) )");
-double result = calculator.solveExpression().result; // 2.9398721563036108
+public class MyClass {
+    public static void main(String args[]) {
+        // Create ExpressionResolver object
+        Expression calculator = new Expression();
 
-calculator.expression("a = ln(10*45+35)/(2^7)");
-result = calculator.solveExpression().result; // 0.04831366321044909
+        calculator.setExpression("1+1 - sin( pi*exp(2) )");
+        double result = calculator.solveExpression().result; // 2.9398721563036108
 
-calculator.expression("a+1");
-result = calculator.solveExpression().result; // 1.048313663210449
+        calculator.setExpression("a = ln(10*45+35)/(2^7)");
+        result = calculator.solveExpression().result; // 0.04831366321044909
+
+        calculator.setExpression("a+1");
+        result = calculator.solveExpression().result; // 1.048313663210449
+    }
+}
 ```
 
 
