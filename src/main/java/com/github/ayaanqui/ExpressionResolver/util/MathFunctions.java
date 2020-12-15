@@ -74,6 +74,6 @@ public class MathFunctions {
                 }
             }
         }
-        return null;
+        return Response.getSuccess(0);
     }
 }

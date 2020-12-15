@@ -225,11 +225,8 @@ public class Expression {
             return Response.getError(new String[] { "Input cannot be left blank" });
 
         Response evalFunctionsResponse = new MathFunctions(formattedUserInput).evaluateFunctions();
-        if (evalFunctionsResponse != null) {
-            // If Response is not null then Response.success is set to false
-            // So just return the errors...
+        if (!evalFunctionsResponse.success)
             return evalFunctionsResponse;
-        }
 
         Response res = new Response();
         // Perform parentheses before everything
