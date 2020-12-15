@@ -2,7 +2,7 @@ package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.LinkedList;
 
-import com.github.ayaanqui.ExpressionResolver.Expression;
+import com.github.ayaanqui.ExpressionResolver.Resolver;
 import com.github.ayaanqui.ExpressionResolver.algorithms.RelatedParentheses;
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 
@@ -21,7 +21,7 @@ public class EvaluateParentheses {
         if (start + 1 == end)
             return Response.getError(new String[] { "Input cannot be left blank" });
 
-        Expression newExpression = new Expression();
+        Resolver newExpression = new Resolver();
         newExpression.expressionList(new LinkedList<String>(formattedList.subList(start + 1, end)));
         Response res = newExpression.solveExpression();
 

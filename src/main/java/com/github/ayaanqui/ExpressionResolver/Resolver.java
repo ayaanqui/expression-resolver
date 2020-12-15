@@ -10,7 +10,7 @@ import com.github.ayaanqui.ExpressionResolver.util.ConvertConstants;
 import com.github.ayaanqui.ExpressionResolver.util.EvaluateParentheses;
 import com.github.ayaanqui.ExpressionResolver.util.MathFunctions;
 
-public class Expression {
+public class Resolver {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<', '=' };
 
     private String userInput;
@@ -18,7 +18,7 @@ public class Expression {
     private ArrayList<String> userHistory;
     private TreeMap<String, Double> variableMap;
 
-    public Expression() {
+    public Resolver() {
         formattedUserInput = new LinkedList<>();
         userHistory = new ArrayList<>();
         variableMap = new TreeMap<>();

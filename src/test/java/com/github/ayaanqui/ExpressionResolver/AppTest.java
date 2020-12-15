@@ -3,7 +3,7 @@ package com.github.ayaanqui.ExpressionResolver;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import com.github.ayaanqui.ExpressionResolver.Expression;
+import com.github.ayaanqui.ExpressionResolver.Resolver;
 
 public class AppTest {
     /**
@@ -11,7 +11,7 @@ public class AppTest {
      */
     @Test
     public void testBasicAddition() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         // Addition
         calculator.setExpression("2+2");
@@ -44,7 +44,7 @@ public class AppTest {
      */
     @Test
     public void testBasicSubtraction() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         // Subtraction
         calculator.setExpression("4-2");
@@ -79,7 +79,7 @@ public class AppTest {
      * Basic testing with addition and subtraction
      */
     public void testAdditionAndSubtraction() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("1+1-1-1");
         assertEquals("0.0", Double.toString(calculator.solveExpression().result));
@@ -99,7 +99,7 @@ public class AppTest {
      */
     @Test
     public void testMultiplicationDivision() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("0*0");
         assertEquals("0.0", Double.toString(calculator.solveExpression().result));
@@ -129,7 +129,7 @@ public class AppTest {
      */
     @Test
     public void testConstants() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("pi");
         assertEquals("3.141592653589793", Double.toString(calculator.solveExpression().result));
@@ -157,7 +157,7 @@ public class AppTest {
      * Basic testing with exponents
      */
     public void testExponents() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("0^1393");
         assertEquals("1.0", Double.toString(calculator.solveExpression().result));
@@ -177,7 +177,7 @@ public class AppTest {
      */
     @Test
     public void testParentheses() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         // Expected...
         // calculator.setUp("(1)");
@@ -197,7 +197,7 @@ public class AppTest {
      */
     @Test
     public void testMixedOperatons() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("95-10+2^(3+3)*10");
         assertEquals("725.0", Double.toString(calculator.solveExpression().result));
@@ -217,7 +217,7 @@ public class AppTest {
      */
     @Test
     public void testMathFunctions() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("sin(0)");
         assertEquals("0.0", Double.toString(calculator.solveExpression().result));
@@ -261,7 +261,7 @@ public class AppTest {
      */
     @Test
     public void testAdvanced() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("ln(1+(1+1))");
         assertEquals("1.0986122886681098", Double.toString(calculator.solveExpression().result));
@@ -284,7 +284,7 @@ public class AppTest {
 
     @Test
     public void testMisc() {
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("-1");
         assertEquals("-1.0", Double.toString(calculator.solveExpression().result));

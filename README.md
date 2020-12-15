@@ -6,12 +6,12 @@ The Expression Resolver for Java provides a very easy way to solve any valid mat
 
 ## Usage (as a Maven package)
 ```java
-import com.github.ayaanqui.ExpressionResolver.Expression;
+import com.github.ayaanqui.ExpressionResolver.Resolver;
 
 public class MyClass {
     public static void main(String args[]) {
         // Create ExpressionResolver object
-        Expression calculator = new Expression();
+        Resolver calculator = new Resolver();
 
         calculator.setExpression("1+1 - sin( pi*exp(2) )");
         double result = calculator.solveExpression().result; // 2.9398721563036108

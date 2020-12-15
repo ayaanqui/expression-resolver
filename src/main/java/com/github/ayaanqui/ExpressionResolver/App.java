@@ -10,7 +10,7 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) throws IOException {
         Scanner keyboard = new Scanner(System.in);
-        Expression calc = new Expression();
+        Resolver calc = new Resolver();
         String userInput;
 
         while (true) {
