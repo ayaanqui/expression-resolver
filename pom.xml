@@ -139,7 +139,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.ayaanqui.calculator.App</mainClass>
+                            <mainClass>com.github.ayaanqui.ExpressionResolver.App</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
