@@ -1,4 +1,4 @@
-package com.ayaanqui.calculator.util;
+package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.TreeMap;
 import java.util.LinkedList;

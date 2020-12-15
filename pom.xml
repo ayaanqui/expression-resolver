@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.ayaanqui.calculator</groupId>
-    <artifactId>calculator</artifactId>
+    <groupId>com.github.ayaanqui</groupId>
+    <artifactId>expression-resolver</artifactId>
     <version>2.0</version>
 
     <name>Example Application</name>
-    <description>Console based calculator that reduces any valid mathematical string expression to a single value.</description>
-    <url>https://github.com/ayaanqui/java-console-calculator</url>
+    <description>String based math expression resolver for Java.</description>
+    <url>https://github.com/ayaanqui/expression-resolver</url>
 
     <licenses>
         <license>
@@ -26,16 +26,16 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/ayaanqui/java-console-calculator.git</connection>
-        <developerConnection>scm:git:ssh://github.com:ayaanqui/java-console-calculator.git</developerConnection>
-        <url>http://github.com/ayaanqui/java-console-calculator/tree/master</url>
+        <connection>scm:git:git://github.com/ayaanqui/expression-resolver.git</connection>
+        <developerConnection>scm:git:ssh://github.com:ayaanqui/expression-resolver.git</developerConnection>
+        <url>http://github.com/ayaanqui/expression-resolver/tree/master</url>
     </scm>
 
     <distributionManagement>
         <repository>
             <id>ayaanqui.calculator</id>
             <name>Java Console Calculator</name>
-            <url>http://github.com/ayaanqui/java-console-calculator</url>
+            <url>http://github.com/ayaanqui/expression-resolver</url>
         </repository>
     </distributionManagement>
 
@@ -130,7 +130,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.ayaanqui.calculator.App</mainClass>
+                    <mainClass>com.github.ayaanqui.ExpressionResolver.App</mainClass>
                 </configuration>
             </plugin>
 

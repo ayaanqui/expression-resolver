@@ -1,8 +1,57 @@
-# Java Console Calculator
+# Expression Resolver
 
-This program takes in a user input as a string, parses the expression, and reduces the expression to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified. _(Note: The program escapes all whitespaces and `$` signs)_
+The Expression Resolver for Java provides a very easy way to solve any valid mathematical expression. The string based expression is parsed, and then reduced to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified.  _(Note: The program escapes all whitespaces and `$` signs)_
 
-## Usage
+## Usage (as a Maven package)
+```java
+// Create ExpressionResolver object
+ExpressionResolver calculator = new ExpressionResolver();
+
+calculator.expression("1+1 - sin( pi*exp(2) )");
+double result = calculator.solveExpression().result; // 2.9398721563036108
+
+calculator.expression("a = ln(10*45+35)/(2^7)");
+result = calculator.solveExpression().result; // 0.04831366321044909
+
+calculator.expression("a+1");
+result = calculator.solveExpression().result; // 1.048313663210449
+```
+
+
+### Supported math operators
+
+1. Addition: `+`
+2. Subtraction: `-`
+3. Multiplication: `*`
+4. Division: `/`
+5. Exponent: `^`
+6. Parentheses: `(` and `)`
+
+**_\*Note:_** Numbers/Variables followed directly by `(` sign do not get identified as multiplication. Therefore, they must be shown explicitly (Ex. use `2*(1+1)` instead of `2(1+1)`). However, this is not the case if a `-` sign is followed by `(`, `-(2*1)` is equivalent to `-1*(2*1)`.
+
+### Supported math functions
+
+_All functions listed, require a single parameter followed by opening and closing parentheses._
+
+1. Sine: `sin`, Inverse sine: `arcsin`
+2. Cosine: `cos`, Inverse cosine: `arccos`
+3. Tangent: `tan`, Inverse tangent: `arctan`
+4. Natural Log (log base `e`): `ln`
+5. Square root: `sqrt`
+6. Absolute value: `abs`
+7. Factorial (!): `fact`
+8. `e^x`: `exp`
+
+### Supported mathematical constants
+
+_All constants can be used directly, without the need of any parameters_
+
+1. PI (π): `pi` (`3.141592653589793`)
+2. Euler's number (e): `e` (`2.718281828459045`)
+3. Tau (τ or 2\*π): `tau` (`6.283185307179586`)
+
+
+## Running as a calculator
 
 Example with mixed operations
 ```
@@ -57,39 +106,7 @@ Variables assigned using the `=` operator. (_Note: once a variable is assigned, 
  *Variables cannot be reassigned
 ```
 
-### Supported math operators
-
-1. Addition: `+`
-2. Subtraction: `-`
-3. Multiplication: `*`
-4. Division: `/`
-5. Exponent: `^`
-6. Parentheses: `(` and `)`
-
-**_\*Note:_** Numbers/Variables followed directly by `(` sign do not get identified as multiplication. Therefore, they must be shown explicitly (Ex. use `2*(1+1)` instead of `2(1+1)`). However, this is not the case if a `-` sign is followed by `(`, `-(2*1)` is equivalent to `-1*(2*1)`.
-
-### Supported math functions
-
-_All functions listed, require a single parameter followed by opening and closing parentheses._
-
-1. Sine: `sin`, Inverse sine: `arcsin`
-2. Cosine: `cos`, Inverse cosine: `arccos`
-3. Tangent: `tan`, Inverse tangent: `arctan`
-4. Natural Log (log base `e`): `ln`
-5. Square root: `sqrt`
-6. Absolute value: `abs`
-7. Factorial (!): `fact`
-8. `e^x`: `exp`
-
-### Supported mathematical constants
-
-_All constants can be used directly, without the need of any parameters_
-
-1. PI (π): `pi` (`3.141592653589793`)
-2. Euler's number (e): `e` (`2.718281828459045`)
-3. Tau (τ or 2\*π): `tau` (`6.283185307179586`)
-
-## Build/Compile (_with Maven_)
+## Compile
 
 ```
 mvn package
@@ -98,13 +115,4 @@ mvn package
 ## Run
 ```
 mvn exec:java
-```
-
-## Create executable jar file
-
-```
-mvn clean compile assembly:single
-```
-```
-java -jar ./target/Calculator-1.0-SNAPSHOT-jar-with-dependencies.jar
 ```

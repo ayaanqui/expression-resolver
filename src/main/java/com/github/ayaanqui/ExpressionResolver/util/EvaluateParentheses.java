@@ -1,11 +1,12 @@
-package com.ayaanqui.calculator.util;
+package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.LinkedList;
-import java.util.HashMap;
 
-import com.ayaanqui.calculator.algorithms.RelatedParentheses;
-import com.ayaanqui.calculator.objects.Response;
-import com.ayaanqui.calculator.Calculator;
+import com.github.ayaanqui.ExpressionResolver.ExpressionResolver;
+import com.github.ayaanqui.ExpressionResolver.algorithms.RelatedParentheses;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+
+import java.util.HashMap;
 
 public class EvaluateParentheses {
     public static Response condense(LinkedList<String> formattedList, int start) {
@@ -16,7 +17,7 @@ public class EvaluateParentheses {
 
         int end = relatedParentheses.get(start);
 
-        Calculator newExpression = new Calculator();
+        ExpressionResolver newExpression = new ExpressionResolver();
         newExpression.expressionList(new LinkedList<String>(formattedList.subList(start + 1, end)));
         Response res = newExpression.solveExpression();
 

@@ -1,16 +1,16 @@
-package com.ayaanqui.calculator;
+package com.github.ayaanqui.ExpressionResolver;
 
 import java.lang.Math;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
-import com.ayaanqui.calculator.util.ConvertConstants;
-import com.ayaanqui.calculator.util.MathFunctions;
-import com.ayaanqui.calculator.util.EvaluateParentheses;
-import com.ayaanqui.calculator.objects.Response;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+import com.github.ayaanqui.ExpressionResolver.util.ConvertConstants;
+import com.github.ayaanqui.ExpressionResolver.util.EvaluateParentheses;
+import com.github.ayaanqui.ExpressionResolver.util.MathFunctions;
 
-public class Calculator {
+public class ExpressionResolver {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<', '=' };
 
     private String userInput;
@@ -18,7 +18,7 @@ public class Calculator {
     private ArrayList<String> userHistory;
     private TreeMap<String, Double> variableMap;
 
-    public Calculator() {
+    public ExpressionResolver() {
         formattedUserInput = new LinkedList<>();
         userHistory = new ArrayList<>();
         variableMap = new TreeMap<>();

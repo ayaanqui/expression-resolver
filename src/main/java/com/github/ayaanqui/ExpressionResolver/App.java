@@ -1,15 +1,16 @@
-package com.ayaanqui.calculator;
+package com.github.ayaanqui.ExpressionResolver;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.IOException;
 
-import com.ayaanqui.calculator.objects.Response;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+
+import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
         Scanner keyboard = new Scanner(System.in);
-        Calculator calc = new Calculator();
+        ExpressionResolver calc = new ExpressionResolver();
         String userInput;
 
         while (true) {

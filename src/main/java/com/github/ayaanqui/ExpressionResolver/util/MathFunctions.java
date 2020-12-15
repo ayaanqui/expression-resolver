@@ -1,9 +1,10 @@
-package com.ayaanqui.calculator.util;
+package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.LinkedList;
-import java.lang.Math;
 
-import com.ayaanqui.calculator.objects.Response;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+
+import java.lang.Math;
 
 public class MathFunctions {
     private static final String[] functionsList = { "sqrt", "sin", "cos", "tan", "ln", "abs", "exp", "fact", "arcsin",
