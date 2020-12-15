@@ -4,27 +4,8 @@
 
 The Expression Resolver for Java provides a very easy way to solve any valid mathematical expression. The string based expression is parsed, and then reduced to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified.  _(Note: The program escapes all whitespaces and `$` signs)_
 
-## Usage (as a Maven package)
-```java
-import com.github.ayaanqui.ExpressionResolver.Resolver;
 
-public class MyClass {
-    public static void main(String args[]) {
-        // Create ExpressionResolver object
-        Resolver calculator = new Resolver();
-
-        calculator.setExpression("1+1 - sin( pi*exp(2) )");
-        double result = calculator.solveExpression().result; // 2.9398721563036108
-
-        calculator.setExpression("a = ln(10*45+35)/(2^7)");
-        result = calculator.solveExpression().result; // 0.04831366321044909
-
-        calculator.setExpression("a+1");
-        result = calculator.solveExpression().result; // 1.048313663210449
-    }
-}
-```
-
+## Features
 
 ### Supported math operators
 
@@ -59,68 +40,152 @@ _All constants can be used directly, without the need of any parameters_
 3. Tau (τ or 2\*π): `tau` (`6.283185307179586`)
 
 
-## Running as a calculator
+## Usage
 
-Example with mixed operations
+### Apache Maven
+```xml
+<repositories>
+    ...
+
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
->> 2+2
-4.0
+```xml
+<dependencies>
+    ...
 
->> 95-10+2^(3+3)*10
-725.0
-
->> sin(20)+pi*2
-7.196130557907214
-```
-
-Access last result by using `<`
-
-```
->> -pi^2
-9.869604401089358
-
->> 2+<
-11.869604401089358
-```
-
-Nested parentheses, with support for detecting mismatching pairs
-
-```
->> 1+((((((((((((1-1))))+2+2))))))))
-5
-
->> ln(((((((sin(tau/2))))))))-(((1+1)))
--38.63870901270898
-
->> (1-2)/sin((3*2)/2
- *Parentheses mismatch
+    <dependency>
+        <groupId>com.github.ayaanqui</groupId>
+        <artifactId>expression-resolver</artifactId>
+        <version>master-SNAPSHOT</version>
+    </dependency>
+</dependencies>
 ```
 
-Variables assigned using the `=` operator. (_Note: once a variable is assigned, the value cannot be changed_)
+### Gradle
+```gradle
+allprojects {
+    repositories {
+        ...
 
+        maven { url "https://jitpack.io" }
+    }
+}
 ```
->> force = 10*16.46
-164.60000000000002
+```gradle
+dependencies {
+    ...
 
->> force + pi
-167.7415926535898
-
->> 1 = 2
- *Variable names cannot start with a number
- *Variables cannot be reassigned
-
->> pi = 3.142
- *Variable names cannot start with a number
- *Variables cannot be reassigned
-```
-
-## Compile
-
-```
-mvn package
+    implementation 'com.github.ayaanqui:expression-resolver:master-SNAPSHOT'
+}
 ```
 
-## Run
+
+## Examples
+
+### Basic use case
+```java
+import com.github.ayaanqui.ExpressionResolver.Resolver;
+
+public class Basic {
+    public static void main(String args[]) {
+        // Create ExpressionResolver object
+        Resolver calculator = new Resolver();
+
+        calculator.setExpression("2+2");
+        double result = calculator.solveExpression().result; // 4
+
+        calculator.setExpression("95-10+2^(3+3)*10");
+        result = calculator.solveExpression().result; // 725.0
+
+        calculator.setExpression("sin(20) + pi * 2");
+        result = calculator.solveExpression().result; // 7.196130557907214
+    }
+}
 ```
-mvn exec:java
+
+### Accessing last result
+Using the `<` operator allows access to the last successfull result
+```java
+import com.github.ayaanqui.ExpressionResolver.Resolver;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+
+public class LastResultOp {
+    public static void main(String args[]) {
+        Resolver calculator = new Resolver();
+
+        calculator.setExpression("-pi^2");
+        Response res = calculator.solveExpression();
+        res.result // 9.869604401089358
+
+        calculator.setExpression("2+<");
+        calculator.solveExpression().result; // 11.869604401089358
+    }
+}
+```
+
+### Nested parentheses
+Detects mismatched, or empty parentheses
+```java
+import com.github.ayaanqui.ExpressionResolver.Resolver;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+
+public class NestedParentheses {
+    public static void main(String args[]) {
+        Resolver solver = new Resolver();
+
+        solver.setExpression("1+((((((((((((1-1))))+2+2))))))))");
+        double value = solver.solveExpression().result; // 5
+
+        solver.setExpression("ln(((((((sin(tau/2))))))))-(((1+1)))");
+        double v2 = solver.solveExpression().result; // -38.63870901270898
+        
+
+        // Mismatch parentheses error:
+        solver.setExpression("(1-2)/sin((3*2)/2");
+        Response res = solver.solveExpression();
+        // Check for errors
+        if (!res.success)
+            System.out.println("Error: " + res.errors[0]); // Error: Parentheses mismatch
+    }
+}
+```
+
+### Variables
+Assigned using the `=` operator. (_Note: once a variable is assigned, the value cannot be changed_)
+```java
+import com.github.ayaanqui.ExpressionResolver.Resolver;
+import com.github.ayaanqui.ExpressionResolver.objects.Response;
+
+public class Variables {
+    public static void main(String args[]) {
+        Resolver solver = new Resolver();
+
+        // Declaring a new variable
+        double v1 = solver.setExpression("force = 10*16.46")
+                        .solveExpression()
+                        .result; // 164.60000000000002
+        
+        // Using variable "force"
+        // force = 164.60000000000002
+        // pi = pre-defined π constant
+        double v2 = solver.setExpression("force + pi")
+                        .solveExpression()
+                        .result; // 167.7415926535898
+        
+        // Results in an error (res.success = false)
+        Response res = solver.setExpression("1 = 2").solveExpression();
+        if (res.success == false)
+            System.out.println("Error:\n" + res.errors[0] + "\n" + res.errors[1]);
+
+        // Results in an error (res.success = false)
+        // All variables are immutable (constant or unchangeable)
+        Response res = solver.setExpression("pi = 3.142").solveExpression();
+        if (res.success == false)
+            System.out.println("Error:\n" + res.errors[0] + "\n" + res.errors[1]);
+    }
+}
 ```
