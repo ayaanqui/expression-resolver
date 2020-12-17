@@ -2,8 +2,10 @@ package com.github.ayaanqui.ExpressionResolver;
 
 import java.lang.Math;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 import com.github.ayaanqui.ExpressionResolver.util.ConvertConstants;
@@ -17,15 +19,30 @@ public class Resolver {
     private LinkedList<String> formattedUserInput;
     private Double lastResult = null;
     private Map<String, Double> variableMap;
+    private Set<String> functionList;
 
     public Resolver() {
         formattedUserInput = new LinkedList<>();
-        variableMap = new HashMap<>();
+        variableMap = new HashMap<>(15);
+        functionList = new HashSet<>(15);
 
         // Define constants
         variableMap.put("pi", Math.PI);
         variableMap.put("e", Math.E);
         variableMap.put("tau", 2 * Math.PI);
+
+        functionList.add("sqrt");
+        functionList.add("sin");
+        functionList.add("cos");
+        functionList.add("tan");
+        functionList.add("ln");
+        functionList.add("deg");
+        functionList.add("abs");
+        functionList.add("exp");
+        functionList.add("fact");
+        functionList.add("arcsin");
+        functionList.add("arccos");
+        functionList.add("arctan");
     }
 
     public void setExpression(String uInp) {
@@ -227,7 +244,7 @@ public class Resolver {
         if (formattedUserInput.isEmpty())
             return Response.getError(new String[] { "Input cannot be left blank" });
 
-        Response evalFunctionsResponse = new MathFunctions(formattedUserInput).evaluateFunctions();
+        Response evalFunctionsResponse = new MathFunctions(formattedUserInput, functionList).evaluateFunctions();
         if (!evalFunctionsResponse.success)
             return evalFunctionsResponse;
 

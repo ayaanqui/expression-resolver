@@ -1,19 +1,19 @@
 package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 
 import java.lang.Math;
 
 public class MathFunctions {
-    private static final String[] functionsList = { "sqrt", "sin", "cos", "tan", "ln", "deg", "abs", "exp", "fact",
-            "arcsin",
-            "arccos", "arctan" };
     private LinkedList<String> formattedUserInput;
+    private Set<String> functionList;
 
-    public MathFunctions(LinkedList<String> formattedUserInput) {
+    public MathFunctions(LinkedList<String> formattedUserInput, Set<String> functionList) {
         this.formattedUserInput = formattedUserInput;
+        this.functionList = functionList;
     }
 
     public double factorialOf(double x) {
@@ -27,8 +27,8 @@ public class MathFunctions {
 
     public Response evaluateFunctions() {
         for (int i = 0; i < formattedUserInput.size(); i++) {
-            for (String operator : functionsList) {
-                if (formattedUserInput.get(i).equals(operator)) {
+            for (String function : functionList) {
+                if (formattedUserInput.get(i).equals(function)) {
                     // Evaluates [(, x, )] from [sin, (, x, )], leaving us with [sin, x]
                     Response evalaluateParenthesesResponse = EvaluateParentheses.condense(formattedUserInput, i + 1);
 
@@ -36,7 +36,7 @@ public class MathFunctions {
                         return evalaluateParenthesesResponse;
                     double x = evalaluateParenthesesResponse.result;
 
-                    switch (operator) {
+                    switch (function) {
                         case "sqrt": // Square Root
                             formattedUserInput.set(i, Math.sqrt(x) + "");
                             break;
