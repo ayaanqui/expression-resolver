@@ -2,10 +2,9 @@ package com.github.ayaanqui.ExpressionResolver;
 
 import java.lang.Math;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Function;
 
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 import com.github.ayaanqui.ExpressionResolver.util.ConvertConstants;
@@ -19,30 +18,35 @@ public class Resolver {
     private LinkedList<String> formattedUserInput;
     private Double lastResult = null;
     private Map<String, Double> variableMap;
-    private Set<String> functionList;
+    private Map<String, Function<Double[], Double>> functionList;
 
     public Resolver() {
         formattedUserInput = new LinkedList<>();
         variableMap = new HashMap<>(15);
-        functionList = new HashSet<>(15);
+        functionList = new HashMap<>(15);
 
         // Define constants
         variableMap.put("pi", Math.PI);
         variableMap.put("e", Math.E);
         variableMap.put("tau", 2 * Math.PI);
 
-        functionList.add("sqrt");
-        functionList.add("sin");
-        functionList.add("cos");
-        functionList.add("tan");
-        functionList.add("ln");
-        functionList.add("deg");
-        functionList.add("abs");
-        functionList.add("exp");
-        functionList.add("fact");
-        functionList.add("arcsin");
-        functionList.add("arccos");
-        functionList.add("arctan");
+        functionList.put("sqrt", args -> Math.sqrt(args[0]));
+        functionList.put("sin", args -> Math.sin(args[0]));
+        functionList.put("cos", args -> Math.cos(args[0]));
+        functionList.put("tan", args -> Math.tan(args[0]));
+        functionList.put("ln", args -> Math.log(args[0]));
+        functionList.put("deg", args -> Math.toDegrees(args[0]));
+        functionList.put("abs", args -> Math.abs(args[0]));
+        functionList.put("exp", args -> Math.exp(args[0]));
+        functionList.put("fact", args -> {
+            double factorial = 1;
+            for (int i = args[0].intValue(); i > 1; i--)
+                factorial *= i;
+            return factorial;
+        });
+        functionList.put("arcsin", args -> Math.asin(args[0]));
+        functionList.put("arccos", args -> Math.acos(args[0]));
+        functionList.put("arctan", args -> Math.atan(args[0]));
     }
 
     public void setExpression(String uInp) {
