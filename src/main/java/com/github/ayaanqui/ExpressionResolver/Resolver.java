@@ -1,8 +1,9 @@
 package com.github.ayaanqui.ExpressionResolver;
 
 import java.lang.Math;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.Map;
 
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 import com.github.ayaanqui.ExpressionResolver.util.ConvertConstants;
@@ -15,11 +16,11 @@ public class Resolver {
     private String userInput;
     private LinkedList<String> formattedUserInput;
     private Double lastResult = null;
-    private TreeMap<String, Double> variableMap;
+    private Map<String, Double> variableMap;
 
     public Resolver() {
         formattedUserInput = new LinkedList<>();
-        variableMap = new TreeMap<>();
+        variableMap = new HashMap<>();
 
         // Define constants
         variableMap.put("pi", Math.PI);

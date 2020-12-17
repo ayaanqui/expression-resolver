@@ -1,14 +1,13 @@
 package com.github.ayaanqui.ExpressionResolver.util;
 
-import java.util.TreeMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 public class ConvertConstants {
-    private TreeMap<String, Double> constantMap;
+    private Map<String, Double> constantMap;
     private LinkedList<String> userInpList;
 
-    public ConvertConstants(LinkedList<String> userInpList, TreeMap<String, Double> variableMap) {
+    public ConvertConstants(LinkedList<String> userInpList, Map<String, Double> variableMap) {
         this.userInpList = userInpList;
         this.constantMap = variableMap;
     }
