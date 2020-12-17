@@ -18,8 +18,6 @@ public class ConvertConstants {
             constantMap.forEach((key, value) -> {
                 if (userInpList.get(iC).equals(key))
                     userInpList.set(iC, value.toString());
-                else if (userInpList.get(iC).equals("-" + key)) // Deals with negative constants
-                    userInpList.set(iC, "-" + value);
             });
         }
     }
