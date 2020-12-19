@@ -1,10 +1,10 @@
-package com.github.ayaanqui.ExpressionResolver.util;
+package com.github.ayaanqui.expressionresolver.util;
 
 import java.util.LinkedList;
 
-import com.github.ayaanqui.ExpressionResolver.Resolver;
-import com.github.ayaanqui.ExpressionResolver.algorithms.RelatedParentheses;
-import com.github.ayaanqui.ExpressionResolver.objects.Response;
+import com.github.ayaanqui.expressionresolver.Resolver;
+import com.github.ayaanqui.expressionresolver.algorithms.RelatedParentheses;
+import com.github.ayaanqui.expressionresolver.objects.Response;
 
 import java.util.HashMap;
 

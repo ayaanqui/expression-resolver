@@ -1,4 +1,4 @@
-package com.github.ayaanqui.ExpressionResolver.objects;
+package com.github.ayaanqui.expressionresolver.objects;
 
 import java.io.Serializable;
 import java.util.Arrays;

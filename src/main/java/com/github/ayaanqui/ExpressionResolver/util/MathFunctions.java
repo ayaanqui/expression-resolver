@@ -1,4 +1,4 @@
-package com.github.ayaanqui.ExpressionResolver.util;
+package com.github.ayaanqui.expressionresolver.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.github.ayaanqui.ExpressionResolver.Resolver;
-import com.github.ayaanqui.ExpressionResolver.algorithms.RelatedParentheses;
-import com.github.ayaanqui.ExpressionResolver.objects.Response;
+import com.github.ayaanqui.expressionresolver.Resolver;
+import com.github.ayaanqui.expressionresolver.algorithms.RelatedParentheses;
+import com.github.ayaanqui.expressionresolver.objects.Response;
 
 public class MathFunctions {
     private LinkedList<String> formattedUserInput;

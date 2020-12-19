@@ -1,4 +1,4 @@
-package com.github.ayaanqui.ExpressionResolver;
+package com.github.ayaanqui.expressionresolver;
 
 import java.lang.Math;
 import java.util.HashMap;
@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.github.ayaanqui.ExpressionResolver.objects.Response;
-import com.github.ayaanqui.ExpressionResolver.util.ConvertConstants;
-import com.github.ayaanqui.ExpressionResolver.util.EvaluateParentheses;
-import com.github.ayaanqui.ExpressionResolver.util.MathFunctions;
+import com.github.ayaanqui.expressionresolver.objects.Response;
+import com.github.ayaanqui.expressionresolver.util.ConvertConstants;
+import com.github.ayaanqui.expressionresolver.util.EvaluateParentheses;
+import com.github.ayaanqui.expressionresolver.util.MathFunctions;
 
 public class Resolver {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', ',', '<', '=' };

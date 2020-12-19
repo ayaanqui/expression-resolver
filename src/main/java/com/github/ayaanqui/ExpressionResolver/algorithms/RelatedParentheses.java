@@ -1,4 +1,4 @@
-package com.github.ayaanqui.ExpressionResolver.algorithms;
+package com.github.ayaanqui.expressionresolver.algorithms;
 
 import java.util.LinkedList;
 import java.util.HashMap;

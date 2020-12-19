@@ -1,4 +1,4 @@
-package com.github.ayaanqui.ExpressionResolver;
+package com.github.ayaanqui.expressionresolver;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
