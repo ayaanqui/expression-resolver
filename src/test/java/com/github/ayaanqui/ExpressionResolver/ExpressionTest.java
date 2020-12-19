@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import com.github.ayaanqui.ExpressionResolver.Resolver;
 
-public class AppTest {
+public class ExpressionTest {
     /**
      * Basic testing with just addition
      */
