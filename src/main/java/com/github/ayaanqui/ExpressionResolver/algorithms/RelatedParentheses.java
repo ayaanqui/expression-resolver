@@ -17,7 +17,8 @@ public class RelatedParentheses {
      * @param formattedList List of all operators and opperands
      * @return HashMap of indexex from formattedList relating each opening
      *         parenthesis with it's corresponding closing parenthesis. Key = index
-     *         of opening parenthesis, Value = index of closing parenthesis.
+     *         of opening parenthesis, Value = index of closing parenthesis. If a
+     *         matching pair was not found an empty HashMap is returned
      */
     public static HashMap<Integer, Integer> evaluateRelations(LinkedList<String> formattedList) {
         Stack<Integer> openingParenthesis = new Stack<>();

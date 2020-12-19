@@ -1,6 +1,7 @@
 package com.github.ayaanqui.ExpressionResolver.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,9 +33,9 @@ public class MathFunctions {
             formattedUserInput.remove(i);
     }
 
-    private ArrayList<Response> evalParams(int from) {
+    private ArrayList<Response> evalParams(int from, int to) {
         ArrayList<Response> list = new ArrayList<>(10);
-        int to = RelatedParentheses.evaluateRelations(formattedUserInput).get(from);
+
         if (from + 1 == to)
             return null;
 
@@ -62,8 +63,8 @@ public class MathFunctions {
         return list;
     }
 
-    private Double[] parseParams(int from) {
-        ArrayList<Response> evalList = evalParams(from);
+    private Double[] parseParams(int from, int to) {
+        ArrayList<Response> evalList = evalParams(from, to);
         if (evalList == null)
             return null;
 
@@ -77,7 +78,14 @@ public class MathFunctions {
             Function<Double[], Double> functionMethod = functionList.get(formattedUserInput.get(i));
 
             if (functionMethod != null) {
-                Double[] parsedParamList = parseParams(i + 1);
+                int from = i + 1;
+
+                HashMap<Integer, Integer> map = RelatedParentheses.evaluateRelations(formattedUserInput);
+                if (map.isEmpty())
+                    return Response.getError(new String[] { "Function requires a closing parenthsis" });
+                int to = map.get(from);
+
+                Double[] parsedParamList = parseParams(from, to);
                 if (parsedParamList == null)
                     return Response.getError(new String[] { "Must provide at least one parameter" });
 
