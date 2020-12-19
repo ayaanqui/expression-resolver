@@ -49,13 +49,27 @@ public class Resolver {
         functionList.put("arctan", args -> Math.atan(args[0]));
     }
 
-    public void setExpression(String uInp) {
+    public Resolver setExpression(String uInp) {
         this.userInput = uInp;
         formattedUserInput = new LinkedList<>();
+        return this;
     }
 
-    public void expressionList(LinkedList<String> subList) {
+    /**
+     * This method allows to skip the parsing of the string if the input has already
+     * been formatted. <br />
+     * Example subList:
+     * 
+     * <pre>
+     * <code>LinkedList<String>: ["1", "+", "sin" + "(" + "pi" + ")"]</code>
+     * </pre>
+     * 
+     * @param subList LinkedList<String> with a pre formatted input
+     * @return Returns a Resolver object
+     */
+    public Resolver expressionList(LinkedList<String> subList) {
         this.formattedUserInput = subList;
+        return this;
     }
 
     public String getUserInput() {
