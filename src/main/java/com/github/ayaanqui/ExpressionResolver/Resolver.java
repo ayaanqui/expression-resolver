@@ -35,15 +35,10 @@ public class Resolver {
         functionList.put("cos", args -> Math.cos(args[0]));
         functionList.put("tan", args -> Math.tan(args[0]));
         functionList.put("ln", args -> Math.log(args[0]));
+        functionList.put("log", args -> Math.log(args[0]) / Math.log(args[1]));
         functionList.put("deg", args -> Math.toDegrees(args[0]));
         functionList.put("abs", args -> Math.abs(args[0]));
         functionList.put("exp", args -> Math.exp(args[0]));
-        functionList.put("fact", args -> {
-            double factorial = 1;
-            for (int i = args[0].intValue(); i > 1; i--)
-                factorial *= i;
-            return factorial;
-        });
         functionList.put("arcsin", args -> Math.asin(args[0]));
         functionList.put("arccos", args -> Math.acos(args[0]));
         functionList.put("arctan", args -> Math.atan(args[0]));
@@ -53,11 +48,28 @@ public class Resolver {
                 sum += elem;
             return sum / args.length;
         });
+        functionList.put("sum", args -> {
+            double sum = 0.0;
+            for (double elem : args)
+                sum += elem;
+            return sum;
+        });
+        functionList.put("fact", args -> {
+            double factorial = 1;
+            for (int i = args[0].intValue(); i > 1; i--)
+                factorial *= i;
+            return factorial;
+        });
     }
 
     public Resolver setExpression(String uInp) {
         this.userInput = uInp;
         formattedUserInput = new LinkedList<>();
+        return this;
+    }
+
+    public Resolver setFunction(String name, Function<Double[], Double> function) {
+        functionList.put(name, function);
         return this;
     }
 
