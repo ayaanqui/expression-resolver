@@ -53,4 +53,26 @@ public class ErrorTest {
         // log requires 2 parameters log(n, base)
         assertFalse(resolver.setExpression("log(10)").solveExpression().success);
     }
+
+    @Test
+    public void incorrectVariableAssignmentTest() {
+        Resolver resolver = new Resolver();
+
+        assertFalse(resolver.setExpression("1=2").solveExpression().success);
+        assertFalse(resolver.setExpression("pi = 3.142").solveExpression().success);
+        assertFalse(resolver.setExpression("name = ayaan").solveExpression().success);
+
+        // Set variable...
+        assertTrue(resolver.setExpression("time_diff = 10").solveExpression().success);
+        assertFalse(resolver.setExpression("time_diff = 9").solveExpression().success);
+    }
+
+    @Test
+    public void miscTest() {
+        Resolver resolver = new Resolver();
+
+        assertFalse(resolver.setExpression("hello").solveExpression().success);
+        assertFalse(resolver.setExpression("The quick brown fox jumps over the lazy boy").solveExpression().success);
+        assertFalse(resolver.setExpression(",").solveExpression().success);
+    }
 }
