@@ -22,8 +22,8 @@ public class Resolver {
 
     public Resolver() {
         formattedUserInput = new LinkedList<>();
-        variableMap = new HashMap<>(15);
-        functionList = new HashMap<>(15);
+        variableMap = new HashMap<>(30);
+        functionList = new HashMap<>(30);
 
         // Define constants
         variableMap.put("pi", Math.PI);
