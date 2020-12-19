@@ -47,6 +47,12 @@ public class Resolver {
         functionList.put("arcsin", args -> Math.asin(args[0]));
         functionList.put("arccos", args -> Math.acos(args[0]));
         functionList.put("arctan", args -> Math.atan(args[0]));
+        functionList.put("avg", args -> {
+            double sum = 0.0;
+            for (double elem : args)
+                sum += elem;
+            return sum / args.length;
+        });
     }
 
     public Resolver setExpression(String uInp) {
