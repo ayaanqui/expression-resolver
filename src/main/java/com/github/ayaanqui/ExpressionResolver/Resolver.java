@@ -12,7 +12,7 @@ import com.github.ayaanqui.ExpressionResolver.util.EvaluateParentheses;
 import com.github.ayaanqui.ExpressionResolver.util.MathFunctions;
 
 public class Resolver {
-    private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', '<', '=' };
+    private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', ',', '<', '=' };
 
     private String userInput;
     private LinkedList<String> formattedUserInput;

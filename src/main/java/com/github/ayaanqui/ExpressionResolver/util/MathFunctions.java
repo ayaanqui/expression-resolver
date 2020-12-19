@@ -1,9 +1,12 @@
 package com.github.ayaanqui.ExpressionResolver.util;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Function;
 
+import com.github.ayaanqui.ExpressionResolver.Resolver;
+import com.github.ayaanqui.ExpressionResolver.algorithms.RelatedParentheses;
 import com.github.ayaanqui.ExpressionResolver.objects.Response;
 
 public class MathFunctions {
@@ -24,19 +27,67 @@ public class MathFunctions {
         return factorial;
     }
 
+    private void removeElements(int from, int to) {
+        for (int i = to; i >= from; i--)
+            formattedUserInput.remove(i);
+    }
+
+    private ArrayList<Response> evalParams(int from) {
+        ArrayList<Response> list = new ArrayList<>(10);
+        int to = RelatedParentheses.evaluateRelations(formattedUserInput).get(from);
+        if (from + 1 == to)
+            return null;
+
+        Resolver resolver = new Resolver();
+        int i = from + 1;
+        while (i + 1 != to) {
+            String elem = formattedUserInput.get(i);
+            if (elem.charAt(0) == ',' && (i - 1) != from) {
+                LinkedList<String> subList = new LinkedList<>(formattedUserInput.subList(from + 1, i));
+                list.add(resolver.expressionList(subList).solveExpression());
+                removeElements(from + 1, i);
+
+                to = RelatedParentheses.evaluateRelations(formattedUserInput).get(from);
+                i = from + 1;
+            } else
+                i++;
+        }
+
+        if (from + 1 == to)
+            return null;
+
+        LinkedList<String> subList = new LinkedList<>(formattedUserInput.subList(from + 1, to));
+        list.add(resolver.expressionList((LinkedList<String>) subList).solveExpression());
+        removeElements(from + 1, to);
+        return list;
+    }
+
+    private Double[] parseParams(int from) {
+        ArrayList<Response> evalList = evalParams(from);
+        if (evalList == null)
+            return null;
+
+        ArrayList<Double> list = new ArrayList<>();
+        evalList.forEach(res -> list.add(res.result));
+        return list.toArray(new Double[0]);
+    }
+
     public Response evaluateFunctions() {
         for (int i = 0; i < formattedUserInput.size(); i++) {
             Function<Double[], Double> functionMethod = functionList.get(formattedUserInput.get(i));
 
             if (functionMethod != null) {
-                Response evalaluateParenthesesResponse = EvaluateParentheses.condense(formattedUserInput, i + 1);
+                Double[] parsedParamList = parseParams(i + 1);
+                if (parsedParamList == null)
+                    return Response.getError(new String[] { "Must provide at least one parameter" });
 
-                if (!evalaluateParenthesesResponse.success)
-                    return evalaluateParenthesesResponse;
-                double x = evalaluateParenthesesResponse.result;
+                double output;
+                try {
+                    output = functionMethod.apply(parsedParamList);
+                } catch (Exception e) {
+                    return Response.getError(new String[] { "Insufficient function parameters" });
+                }
 
-                Double[] args = new Double[] { x };
-                double output = functionMethod.apply(args);
                 formattedUserInput.set(i, Double.toString(output));
                 formattedUserInput.remove(i + 1); // Remove x from formattedUserInput
             }
