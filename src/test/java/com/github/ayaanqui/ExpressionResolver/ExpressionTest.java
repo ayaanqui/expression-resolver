@@ -3,8 +3,6 @@ package com.github.ayaanqui.ExpressionResolver;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import com.github.ayaanqui.ExpressionResolver.Resolver;
-
 public class ExpressionTest {
     /**
      * Basic testing with just addition
