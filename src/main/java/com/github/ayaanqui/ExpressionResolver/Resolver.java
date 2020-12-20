@@ -14,14 +14,14 @@ import com.github.ayaanqui.expressionresolver.util.MathFunctions;
 public class Resolver {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', ',', '<', '=' };
 
-    private String userInput;
-    private LinkedList<String> formattedUserInput;
+    private String expression;
+    private LinkedList<String> parsedExpression;
     private Double lastResult = null;
     private Map<String, Double> variableMap;
     private Map<String, Function<Double[], Double>> functionList;
 
     public Resolver() {
-        formattedUserInput = new LinkedList<>();
+        parsedExpression = new LinkedList<>();
         variableMap = new HashMap<>(30);
         functionList = new HashMap<>(30);
 
@@ -62,9 +62,25 @@ public class Resolver {
         });
     }
 
-    public Resolver setExpression(String uInp) {
-        this.userInput = uInp;
-        formattedUserInput = new LinkedList<>();
+    /**
+     * <p>
+     * Sets the string expression. Ex: "1+1"
+     * </p>
+     * <p>
+     * Usage:
+     * </p>
+     * 
+     * <pre>
+     * <code>Resolver res = new Resolver();</code>
+     * <code>double value = res.setExpression("sin(pi+1)/log(39.5, 10)").solveExpression().result;</code>
+     * </pre>
+     * 
+     * @param expression String-based expression
+     * @return Resolver object
+     */
+    public Resolver setExpression(String expression) {
+        this.expression = expression;
+        parsedExpression = new LinkedList<>();
         return this;
     }
 
@@ -74,9 +90,13 @@ public class Resolver {
     }
 
     /**
-     * This method allows to skip the parsing of the string if the input has already
-     * been formatted. <br />
+     * <p>
+     * This method can be used when an expression list has already been parsed with
+     * the correct format to skip the parsing step.
+     * </p>
+     * <p>
      * Example subList:
+     * </p>
      * 
      * <pre>
      * <code>LinkedList<String>: ["1", "+", "sin" + "(" + "pi" + ")"]</code>
@@ -86,12 +106,12 @@ public class Resolver {
      * @return Returns a Resolver object
      */
     public Resolver expressionList(LinkedList<String> subList) {
-        this.formattedUserInput = subList;
+        this.parsedExpression = subList;
         return this;
     }
 
-    public String getUserInput() {
-        return userInput;
+    public String getExpression() {
+        return expression;
     }
 
     public double getLastResult() {
@@ -171,16 +191,16 @@ public class Resolver {
 
     public LinkedList<String> formatUserInput() {
         // Trim whitespaces and $ signs
-        userInput = userInput.replaceAll("\\s", "");
-        userInput = userInput.replace("$", "");
+        expression = expression.replaceAll("\\s", "");
+        expression = expression.replace("$", "");
 
         LinkedList<String> formattedList = new LinkedList<>();
         int start = 0;
-        for (int i = 0; i < userInput.length(); i++) {
+        for (int i = 0; i < expression.length(); i++) {
             for (char operator : operatorList) {
-                if (operator == userInput.charAt(i)) {
+                if (operator == expression.charAt(i)) {
                     // Content before operator
-                    String prefix = userInput.substring(start, i);
+                    String prefix = expression.substring(start, i);
                     if (prefix.length() > 0)
                         formattedList.add(prefix);
                     formattedList.add(Character.toString(operator));
@@ -190,10 +210,10 @@ public class Resolver {
             }
         }
 
-        if (userInput.equals(""))
+        if (expression.equals(""))
             return formattedList;
 
-        String remainder = userInput.substring(start);
+        String remainder = expression.substring(start);
         if (!remainder.equals(""))
             formattedList.add(remainder);
 
@@ -221,13 +241,13 @@ public class Resolver {
 
     public Response condenseExpression(char operator, int i) {
         // Check to see if (i-1) and (i-1) are within the bounds of formattedUserInput
-        if (i - 1 < 0 || i + 1 >= formattedUserInput.size()) {
+        if (i - 1 < 0 || i + 1 >= parsedExpression.size()) {
             return Response.getError(new String[] { "Operator requires two numbers" });
         }
 
-        String lhs = formattedUserInput.get(i - 1);
+        String lhs = parsedExpression.get(i - 1);
         Response x = catchNumberException(lhs);
-        Response y = catchNumberException(formattedUserInput.get(i + 1));
+        Response y = catchNumberException(parsedExpression.get(i + 1));
 
         // Handle variables
         if (operator == '=') {
@@ -273,22 +293,22 @@ public class Resolver {
     }
 
     public Response solveExpression() {
-        if (formattedUserInput.isEmpty()) {
-            this.formattedUserInput = formatUserInput();
+        if (parsedExpression.isEmpty()) {
+            this.parsedExpression = formatUserInput();
         }
 
-        if (formattedUserInput.isEmpty())
+        if (parsedExpression.isEmpty())
             return Response.getError(new String[] { "Input cannot be left blank" });
 
-        Response evalFunctionsResponse = new MathFunctions(formattedUserInput, functionList).evaluateFunctions();
+        Response evalFunctionsResponse = new MathFunctions(parsedExpression, functionList).evaluateFunctions();
         if (!evalFunctionsResponse.success)
             return evalFunctionsResponse;
 
         Response res = new Response();
         // Perform parentheses before everything
-        for (int i = 0; i < formattedUserInput.size() - 1; i++) {
-            if (formattedUserInput.get(i).equals("(")) {
-                res = EvaluateParentheses.condense(formattedUserInput, i);
+        for (int i = 0; i < parsedExpression.size() - 1; i++) {
+            if (parsedExpression.get(i).equals("(")) {
+                res = EvaluateParentheses.condense(parsedExpression, i);
                 if (!res.success)
                     return res;
                 i--;
@@ -297,8 +317,8 @@ public class Resolver {
 
         final char[][] orderOfOperations = new char[][] { { '^' }, { '*', '/' }, { '+', '-' }, { '=' } };
         for (char[] operators : orderOfOperations) {
-            for (int i = 1; i < formattedUserInput.size(); i++) {
-                char inputOp = formattedUserInput.get(i).charAt(0);
+            for (int i = 1; i < parsedExpression.size(); i++) {
+                char inputOp = parsedExpression.get(i).charAt(0);
 
                 for (char op : operators) {
                     if (op == inputOp) {
@@ -309,19 +329,19 @@ public class Resolver {
                         if (op == '/' && Double.isInfinite(res.result))
                             return Response.getError(new String[] { "Could not divide by zero" });
 
-                        formattedUserInput.remove(i + 1); // Remove rhs operand
-                        formattedUserInput.remove(i); // Remove operator
-                        formattedUserInput.set(i - 1, Double.toString(res.result));
+                        parsedExpression.remove(i + 1); // Remove rhs operand
+                        parsedExpression.remove(i); // Remove operator
+                        parsedExpression.set(i - 1, Double.toString(res.result));
                         i--;
                     }
                 }
             }
         }
 
-        if (formattedUserInput.size() == 1) {
+        if (parsedExpression.size() == 1) {
             double expression;
             try {
-                expression = Double.parseDouble(formattedUserInput.get(0));
+                expression = Double.parseDouble(parsedExpression.get(0));
             } catch (Exception e) {
                 return Response.getError(new String[] { "Not a number", "Error parsing input" });
             }
