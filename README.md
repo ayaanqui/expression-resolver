@@ -208,3 +208,35 @@ Response res = solver.setExpression("pi = 3.142").solveExpression();
 if (res.success == false)
     System.out.println("Error:\n" + res.errors[0] + "\n" + res.errors[1]);
 ```
+
+### Defining functions
+Functions can be defined by using `setFunction` method which takes two parameters: `String` function name, and `Function<Double[], Double>` function definition.
+
+```java
+Resolver res = new Resolver();
+
+// Defining min function
+double minVal = res
+    .setExpression("min(45, 9, 22, pi, 644, 004, 192)")
+    //           Name   Function Definition
+    .setFunction("min", params -> {
+        double min = params[0];
+        for (double val : params)
+            if (val < min)
+                min = val;
+        return min;
+    })
+    .solveExpression().result; // pi
+
+// Defining force function
+double val = res
+    .setFunction("force", params -> {
+        return params[0] * params[1];
+    })
+    .setExpression("force(27, 10)")
+    .solveExpression()
+    .result;
+
+// Redfining built-in function arcsin
+res.setFunction("arcsin", params -> 1 / Math.sin(params[0]));
+```
