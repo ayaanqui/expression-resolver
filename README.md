@@ -18,23 +18,19 @@ The Expression Resolver for Java provides a very easy way to solve any valid mat
 **_\*Note:_** Numbers/Variables followed directly by `(` sign do not get identified as multiplication. Therefore, they must be shown explicitly (Ex. use `2*(1+1)` instead of `2(1+1)`). However, this is not the case if a `-` sign is followed by `(`, `-(2*1)` is equivalent to `-1*(2*1)`.
 
 ### Built-in functions
-| Name | Description | Parameter(s) |
-| --- | --- | --- |
-| `sin` | Sine (radians) | `n` |
-| `cos` | Cosine (radians) | `n` |
-| `tan` | Tangent (radians) | `n` |
-| `ln` | Natural Log (log base `e`) | `n` |
-| `log` | Log | `n, base` |
-| `sqrt` | Square root | `n` |
-| `deg` | Convert to radians to degrees | `n` |
-| `abs` | Absolute value | `n` |
-| `arcsin` | Inverse sine (radians) | `n` |
-| `arccos` | Inverse cosine (radians) | `n` |
-| `arctan` | Inverse tangent (radians) | `n` |
-| `fact` | Factorial (!) | `n` (`n >= 0`) |
-| `exp` | Exponential (`e^x`) | `n` |
-| `avg` | Average | `n1, n2, n3, ..., nk` |
-| `sum` | Summation | `n1, n2, n3, ..., nk` |
+| Function | Description | Inverse | Parameter(s) |
+| --- | --- | --- | --- |
+| `sin` | Sine (radians) | `arcsin` | `n` |
+| `cos` | Cosine (radians) | `arccos` | `n` |
+| `tan` | Tangent (radians) | `arctan` | `n` |
+| `sqrt` | Square root | `N/A` | `n` |
+| `ln` | Natural Log (log base `e`) | `exp` | `n` |
+| `log` | Log | `N/A` | `n, base` |
+| `deg` | Convert to radians to degrees | `N/A` | `n` |
+| `abs` | Absolute value | `N/A` | `n` |
+| `fact` | Factorial (!) | `N/A` | `n` (`n >= 0`) |
+| `avg` | Average | `N/A` | `n1, n2, n3, ..., nk` |
+| `sum` | Summation | `N/A` | `n1, n2, n3, ..., nk` |
 
 ### Built-in mathematical constants
 - PI (π): `pi` (`3.141592653589793`)
