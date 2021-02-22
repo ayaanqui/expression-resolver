@@ -273,23 +273,22 @@ public class Resolver {
         if (!y.success)
             return y;
 
-        double output = 0.0;
-        if (operator == '^')
-            output = Math.pow(x.result, y.result);
-        else if (operator == '/')
-            output = x.result / y.result;
-        else if (operator == '*')
-            output = x.result * y.result;
-        else if (operator == '-')
-            output = x.result - y.result;
-        else if (operator == '+')
-            output = x.result + y.result;
-        else if (operator == '=') {
-            this.variableMap.put(lhs, y.result);
-            output = y.result;
+        switch (operator) {
+            case '^':
+                return Response.getSuccess(Math.pow(x.result, y.result));
+            case '/':
+                return Response.getSuccess(x.result / y.result);
+            case '*':
+                return Response.getSuccess(x.result * y.result);
+            case '-':
+                return Response.getSuccess(x.result - y.result);
+            case '+':
+                return Response.getSuccess(x.result + y.result);
+            case '=':
+                this.variableMap.put(lhs, y.result);
+                return Response.getSuccess(y.result);
         }
-
-        return Response.getSuccess(output);
+        return Response.getError(new String[] { "Invalid operator" });
     }
 
     public Response solveExpression() {
