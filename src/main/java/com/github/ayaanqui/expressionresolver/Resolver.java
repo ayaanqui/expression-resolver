@@ -36,7 +36,8 @@ public class Resolver {
         functionList.put("tan", args -> Math.tan(args[0]));
         functionList.put("ln", args -> Math.log(args[0]));
         functionList.put("log", args -> Math.log(args[0]) / Math.log(args[1]));
-        functionList.put("deg", args -> Math.toDegrees(args[0]));
+        functionList.put("deg", args -> args[0] * (180 / Math.PI));
+        functionList.put("rad", args -> args[0] * (Math.PI / 180));
         functionList.put("abs", args -> Math.abs(args[0]));
         functionList.put("exp", args -> Math.exp(args[0]));
         functionList.put("arcsin", args -> Math.asin(args[0]));
@@ -274,19 +275,19 @@ public class Resolver {
             return y;
 
         switch (operator) {
-            case '^':
-                return Response.getSuccess(Math.pow(x.result, y.result));
-            case '/':
-                return Response.getSuccess(x.result / y.result);
-            case '*':
-                return Response.getSuccess(x.result * y.result);
-            case '-':
-                return Response.getSuccess(x.result - y.result);
-            case '+':
-                return Response.getSuccess(x.result + y.result);
-            case '=':
-                this.variableMap.put(lhs, y.result);
-                return Response.getSuccess(y.result);
+        case '^':
+            return Response.getSuccess(Math.pow(x.result, y.result));
+        case '/':
+            return Response.getSuccess(x.result / y.result);
+        case '*':
+            return Response.getSuccess(x.result * y.result);
+        case '-':
+            return Response.getSuccess(x.result - y.result);
+        case '+':
+            return Response.getSuccess(x.result + y.result);
+        case '=':
+            this.variableMap.put(lhs, y.result);
+            return Response.getSuccess(y.result);
         }
         return Response.getError(new String[] { "Invalid operator" });
     }

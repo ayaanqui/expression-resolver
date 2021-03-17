@@ -27,7 +27,8 @@ The Expression Resolver for Java provides a very easy way to solve any valid mat
 | `sqrt`   | Square root                   | `N/A`    | `n`            |
 | `ln`     | Natural Log (log base `e`)    | `exp`    | `n`            |
 | `log`    | Log                           | `N/A`    | `n, base`      |
-| `deg`    | Convert to radians to degrees | `N/A`    | `n`            |
+| `deg`    | Convert to radians to degrees | `N/A`    | `n` (radians)  |
+| `rad`    | Convert to degrees to radians | `N/A`    | `n` (degrees)  |
 | `abs`    | Absolute value                | `N/A`    | `n`            |
 | `fact`   | Factorial (!)                 | `N/A`    | `n` (`n >= 0`) |
 | `avg`    | Average                       | `N/A`    | `n1, ..., nk`  |
