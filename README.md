@@ -19,20 +19,20 @@ The Expression Resolver for Java provides a very easy way to solve any valid mat
 
 ### Built-in functions
 
-| Function | Description                   | Inverse  | Parameter(s)   |
-| -------- | ----------------------------- | -------- | -------------- |
-| `sin`    | Sine (radians)                | `arcsin` | `n`            |
-| `cos`    | Cosine (radians)              | `arccos` | `n`            |
-| `tan`    | Tangent (radians)             | `arctan` | `n`            |
-| `sqrt`   | Square root                   | `N/A`    | `n`            |
-| `ln`     | Natural Log (log base `e`)    | `exp`    | `n`            |
-| `log`    | Log                           | `N/A`    | `n, base`      |
-| `deg`    | Convert to radians to degrees | `N/A`    | `n` (radians)  |
-| `rad`    | Convert to degrees to radians | `N/A`    | `n` (degrees)  |
-| `abs`    | Absolute value                | `N/A`    | `n`            |
-| `fact`   | Factorial (!)                 | `N/A`    | `n` (`n >= 0`) |
-| `avg`    | Average                       | `N/A`    | `n1, ..., nk`  |
-| `sum`    | Summation                     | `N/A`    | `n1, ..., nk`  |
+| Function | Description                | Inverse  | Parameter(s)   |
+| -------- | -------------------------- | -------- | -------------- |
+| `sin`    | Sine (radians)             | `arcsin` | `n`            |
+| `cos`    | Cosine (radians)           | `arccos` | `n`            |
+| `tan`    | Tangent (radians)          | `arctan` | `n`            |
+| `sqrt`   | Square root                | `N/A`    | `n`            |
+| `ln`     | Natural Log (log base `e`) | `exp`    | `n`            |
+| `log`    | Log                        | `N/A`    | `n, base`      |
+| `deg`    | Convert radians to degrees | `N/A`    | `n` (radians)  |
+| `rad`    | Convert degrees to radians | `N/A`    | `n` (degrees)  |
+| `abs`    | Absolute value             | `N/A`    | `n`            |
+| `fact`   | Factorial (!)              | `N/A`    | `n` (`n >= 0`) |
+| `avg`    | Average                    | `N/A`    | `n1, ..., nk`  |
+| `sum`    | Summation                  | `N/A`    | `n1, ..., nk`  |
 
 ### Built-in mathematical constants
 
