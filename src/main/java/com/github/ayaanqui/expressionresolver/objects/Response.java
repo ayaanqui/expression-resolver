@@ -26,7 +26,7 @@ public class Response implements Serializable {
         return res;
     }
 
-    public static Response getError(String[] errors) {
+    public static Response getError(String... errors) {
         Response res = new Response();
         res.success = false;
         res.errors = errors;
