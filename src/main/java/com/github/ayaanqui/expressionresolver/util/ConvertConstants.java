@@ -1,13 +1,13 @@
 package com.github.ayaanqui.expressionresolver.util;
 
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class ConvertConstants {
     private Map<String, Double> constantMap;
-    private LinkedList<String> userInpList;
+    private List<String> userInpList;
 
-    public ConvertConstants(LinkedList<String> userInpList, Map<String, Double> variableMap) {
+    public ConvertConstants(List<String> userInpList, Map<String, Double> variableMap) {
         this.userInpList = userInpList;
         this.constantMap = variableMap;
     }

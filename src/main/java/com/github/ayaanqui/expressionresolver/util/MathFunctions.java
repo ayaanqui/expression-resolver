@@ -3,6 +3,7 @@ package com.github.ayaanqui.expressionresolver.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -11,10 +12,10 @@ import com.github.ayaanqui.expressionresolver.algorithms.RelatedParentheses;
 import com.github.ayaanqui.expressionresolver.objects.Response;
 
 public class MathFunctions {
-    private LinkedList<String> formattedUserInput;
+    private List<String> formattedUserInput;
     private Map<String, Function<Double[], Double>> functionList;
 
-    public MathFunctions(LinkedList<String> formattedUserInput, Map<String, Function<Double[], Double>> functionList) {
+    public MathFunctions(List<String> formattedUserInput, Map<String, Function<Double[], Double>> functionList) {
         this.formattedUserInput = formattedUserInput;
         this.functionList = functionList;
     }
@@ -44,7 +45,7 @@ public class MathFunctions {
         while (i + 1 != to) {
             String elem = formattedUserInput.get(i);
             if (elem.charAt(0) == ',' && (i - 1) != from) {
-                LinkedList<String> subList = new LinkedList<>(formattedUserInput.subList(from + 1, i));
+                List<String> subList = new LinkedList<>(formattedUserInput.subList(from + 1, i));
                 list.add(resolver.expressionList(subList).solveExpression());
                 removeElements(from + 1, i);
 
@@ -57,8 +58,8 @@ public class MathFunctions {
         if (from + 1 == to)
             return null;
 
-        LinkedList<String> subList = new LinkedList<>(formattedUserInput.subList(from + 1, to));
-        list.add(resolver.expressionList((LinkedList<String>) subList).solveExpression());
+        List<String> subList = new LinkedList<>(formattedUserInput.subList(from + 1, to));
+        list.add(resolver.expressionList(subList).solveExpression());
         removeElements(from + 1, to);
         return list;
     }

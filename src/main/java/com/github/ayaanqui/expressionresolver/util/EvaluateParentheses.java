@@ -1,6 +1,7 @@
 package com.github.ayaanqui.expressionresolver.util;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import com.github.ayaanqui.expressionresolver.Resolver;
 import com.github.ayaanqui.expressionresolver.algorithms.RelatedParentheses;
@@ -9,7 +10,7 @@ import com.github.ayaanqui.expressionresolver.objects.Response;
 import java.util.HashMap;
 
 public class EvaluateParentheses {
-    public static Response condense(LinkedList<String> formattedList, int start) {
+    public static Response condense(List<String> formattedList, int start) {
         HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
 
         if (relatedParentheses.isEmpty())

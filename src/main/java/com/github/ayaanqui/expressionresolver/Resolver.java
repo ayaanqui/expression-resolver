@@ -2,6 +2,7 @@ package com.github.ayaanqui.expressionresolver;
 
 import java.lang.Math;
 import java.util.HashMap;
+import java.util.List;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Function;
@@ -15,7 +16,7 @@ public class Resolver {
     private final char[] operatorList = { '+', '-', '*', '/', '^', '(', ')', ',', '<', '=' };
 
     private String expression;
-    private LinkedList<String> parsedExpression;
+    private List<String> parsedExpression;
     private Double lastResult = null;
     private Map<String, Double> variableMap;
     private Map<String, Function<Double[], Double>> functionList;
@@ -100,13 +101,13 @@ public class Resolver {
      * </p>
      * 
      * <pre>
-     * <code>LinkedList<String>: ["1", "+", "sin" + "(" + "pi" + ")"]</code>
+     * <code>List<String>: ["1", "+", "sin" + "(" + "pi" + ")"]</code>
      * </pre>
      * 
-     * @param subList LinkedList<String> with a pre formatted input
+     * @param subList List<String> with a pre formatted input
      * @return Returns a Resolver object
      */
-    public Resolver expressionList(LinkedList<String> subList) {
+    public Resolver expressionList(List<String> subList) {
         this.parsedExpression = subList;
         return this;
     }
@@ -131,7 +132,7 @@ public class Resolver {
      * @param post          Right hand side opperand
      * @return if processed correctly true, else false
      */
-    private boolean handleNegative(LinkedList<String> formattedList, int pre, int op, int post) {
+    private boolean handleNegative(List<String> formattedList, int pre, int op, int post) {
         if (op >= formattedList.size() || post >= formattedList.size())
             return false;
 
@@ -175,7 +176,7 @@ public class Resolver {
      *
      * @param formattedList
      */
-    private void operatorFormatting(LinkedList<String> formattedList) {
+    private void operatorFormatting(List<String> formattedList) {
         for (int i = 0; i < formattedList.size(); i++) {
             String item = formattedList.get(i);
 
@@ -190,12 +191,12 @@ public class Resolver {
         }
     }
 
-    public LinkedList<String> formatUserInput() {
+    public List<String> formatUserInput() {
         // Trim whitespaces and $ signs
         expression = expression.replaceAll("\\s", "");
         expression = expression.replace("$", "");
 
-        LinkedList<String> formattedList = new LinkedList<>();
+        List<String> formattedList = new LinkedList<>();
         int start = 0;
         for (int i = 0; i < expression.length(); i++) {
             for (char operator : operatorList) {

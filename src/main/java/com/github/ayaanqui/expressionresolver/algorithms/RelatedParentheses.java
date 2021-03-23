@@ -1,6 +1,6 @@
 package com.github.ayaanqui.expressionresolver.algorithms;
 
-import java.util.LinkedList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -20,7 +20,7 @@ public class RelatedParentheses {
      *         of opening parenthesis, Value = index of closing parenthesis. If a
      *         matching pair was not found an empty HashMap is returned
      */
-    public static HashMap<Integer, Integer> evaluateRelations(LinkedList<String> formattedList) {
+    public static HashMap<Integer, Integer> evaluateRelations(List<String> formattedList) {
         Stack<Integer> openingParenthesis = new Stack<>();
         HashMap<Integer, Integer> relationships = new HashMap<>();
 
