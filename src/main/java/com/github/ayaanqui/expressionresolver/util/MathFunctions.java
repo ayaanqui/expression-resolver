@@ -83,18 +83,18 @@ public class MathFunctions {
 
                 HashMap<Integer, Integer> map = RelatedParentheses.evaluateRelations(formattedUserInput);
                 if (map.isEmpty())
-                    return Response.getError(new String[] { "Function requires a closing parenthsis" });
+                    return Response.getError("Function requires a closing parenthsis");
                 int to = map.get(from);
 
                 Double[] parsedParamList = parseParams(from, to);
                 if (parsedParamList == null)
-                    return Response.getError(new String[] { "Must provide at least one parameter" });
+                    return Response.getError("Must provide at least one parameter");
 
                 double output;
                 try {
                     output = functionMethod.apply(parsedParamList);
                 } catch (Exception e) {
-                    return Response.getError(new String[] { "Insufficient function parameters" });
+                    return Response.getError("Insufficient function parameters");
                 }
 
                 formattedUserInput.set(i, Double.toString(output));

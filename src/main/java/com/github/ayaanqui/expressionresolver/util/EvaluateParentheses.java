@@ -14,13 +14,13 @@ public class EvaluateParentheses {
         HashMap<Integer, Integer> relatedParentheses = RelatedParentheses.evaluateRelations(formattedList);
 
         if (relatedParentheses.isEmpty())
-            return Response.getError(new String[] { "Parentheses mismatch" });
+            return Response.getError("Parentheses mismatch");
 
         int end = relatedParentheses.get(start);
 
         // Check if the pair contains a subexpression
         if (start + 1 == end)
-            return Response.getError(new String[] { "Input cannot be left blank" });
+            return Response.getError("Input cannot be left blank");
 
         Resolver newExpression = new Resolver();
         newExpression.expressionList(new LinkedList<String>(formattedList.subList(start + 1, end)));

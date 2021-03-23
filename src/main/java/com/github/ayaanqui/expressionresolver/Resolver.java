@@ -236,7 +236,7 @@ public class Resolver {
         try {
             result = Double.parseDouble(elem); // value of i-1
         } catch (NumberFormatException e) {
-            return Response.getError(new String[] { "Operator requires two numbers" });
+            return Response.getError("Operator requires two numbers");
         }
         return Response.getSuccess(result);
     }
@@ -244,7 +244,7 @@ public class Resolver {
     public Response condenseExpression(char operator, int i) {
         // Check to see if (i-1) and (i-1) are within the bounds of formattedUserInput
         if (i - 1 < 0 || i + 1 >= parsedExpression.size()) {
-            return Response.getError(new String[] { "Operator requires two numbers" });
+            return Response.getError("Operator requires two numbers");
         }
 
         String lhs = parsedExpression.get(i - 1);
@@ -258,15 +258,12 @@ public class Resolver {
                 x.success = true;
                 x.errors = new String[0];
             } else {
-                x.success = false;
-                x.errors = new String[] { "Variable names cannot start with a number",
-                        "Variables cannot be reassigned" };
+                x = Response.getError("Variable names cannot start with a number", "Variables cannot be reassigned");
             }
 
             // y must be a number
             if (!y.success) {
-                y.success = false;
-                y.errors = new String[] { "Variable value must be a number" };
+                y = Response.getError("Variable value must be a number");
             }
         }
 
@@ -290,7 +287,7 @@ public class Resolver {
             this.variableMap.put(lhs, y.result);
             return Response.getSuccess(y.result);
         }
-        return Response.getError(new String[] { "Invalid operator" });
+        return Response.getError("Invalid operator");
     }
 
     public Response solveExpression() {
@@ -299,7 +296,7 @@ public class Resolver {
         }
 
         if (parsedExpression.isEmpty())
-            return Response.getError(new String[] { "Input cannot be left blank" });
+            return Response.getError("Input cannot be left blank");
 
         Response evalFunctionsResponse = new MathFunctions(parsedExpression, functionList).evaluateFunctions();
         if (!evalFunctionsResponse.success)
@@ -328,7 +325,7 @@ public class Resolver {
                             return res;
 
                         if (op == '/' && Double.isInfinite(res.result))
-                            return Response.getError(new String[] { "Could not divide by zero" });
+                            return Response.getError("Could not divide by zero");
 
                         parsedExpression.remove(i + 1); // Remove rhs operand
                         parsedExpression.remove(i); // Remove operator
@@ -344,12 +341,12 @@ public class Resolver {
             try {
                 expression = Double.parseDouble(parsedExpression.get(0));
             } catch (Exception e) {
-                return Response.getError(new String[] { "Not a number", "Error parsing input" });
+                return Response.getError("Not a number", "Error parsing input");
             }
             lastResult = expression;
             return Response.getSuccess(expression);
         } else {
-            return Response.getError(new String[] { "Could not resolve expression" });
+            return Response.getError("Could not resolve expression");
         }
     }
 }
