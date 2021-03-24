@@ -20,15 +20,6 @@ public class MathFunctions {
         this.functionList = functionList;
     }
 
-    public double factorialOf(double x) {
-        double factorial = 1;
-
-        for (int i = (int) x; i > 1; i--) {
-            factorial *= i;
-        }
-        return factorial;
-    }
-
     private void removeElements(int from, int to) {
         for (int i = to; i >= from; i--)
             formattedUserInput.remove(i);
@@ -77,29 +68,29 @@ public class MathFunctions {
     public Response evaluateFunctions() {
         for (int i = 0; i < formattedUserInput.size(); i++) {
             Function<Double[], Double> functionMethod = functionList.get(formattedUserInput.get(i));
+            if (functionMethod == null)
+                continue;
 
-            if (functionMethod != null) {
-                int from = i + 1;
+            int from = i + 1;
 
-                HashMap<Integer, Integer> map = RelatedParentheses.evaluateRelations(formattedUserInput);
-                if (map.isEmpty())
-                    return Response.getError("Function requires a closing parenthsis");
-                int to = map.get(from);
+            HashMap<Integer, Integer> map = RelatedParentheses.evaluateRelations(formattedUserInput);
+            if (map.isEmpty())
+                return Response.getError("Function requires a closing parenthsis");
+            int to = map.get(from);
 
-                Double[] parsedParamList = parseParams(from, to);
-                if (parsedParamList == null)
-                    return Response.getError("Must provide at least one parameter");
+            Double[] parsedParamList = parseParams(from, to);
+            if (parsedParamList == null)
+                return Response.getError("Must provide at least one parameter");
 
-                double output;
-                try {
-                    output = functionMethod.apply(parsedParamList);
-                } catch (Exception e) {
-                    return Response.getError("Insufficient function parameters");
-                }
-
-                formattedUserInput.set(i, Double.toString(output));
-                formattedUserInput.remove(i + 1); // Remove x from formattedUserInput
+            double output;
+            try {
+                output = functionMethod.apply(parsedParamList);
+            } catch (Exception e) {
+                return Response.getError("Insufficient function parameters");
             }
+
+            formattedUserInput.set(i, Double.toString(output));
+            formattedUserInput.remove(i + 1); // Remove x from formattedUserInput
         }
         return Response.getSuccess(0);
     }
