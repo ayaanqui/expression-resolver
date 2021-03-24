@@ -1,6 +1,7 @@
 package com.github.ayaanqui.expressionresolver;
 
 import java.lang.Math;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.LinkedList;
@@ -45,16 +46,11 @@ public class Resolver {
         functionList.put("arccos", args -> Math.acos(args[0]));
         functionList.put("arctan", args -> Math.atan(args[0]));
         functionList.put("avg", args -> {
-            double sum = 0.0;
-            for (double elem : args)
-                sum += elem;
+            double sum = Arrays.stream(args).reduce(0.0, (total, arg) -> total += arg);
             return sum / args.length;
         });
         functionList.put("sum", args -> {
-            double sum = 0.0;
-            for (double elem : args)
-                sum += elem;
-            return sum;
+            return Arrays.stream(args).reduce(0.0, (total, arg) -> total += arg);
         });
         functionList.put("fact", args -> {
             double factorial = 1;
