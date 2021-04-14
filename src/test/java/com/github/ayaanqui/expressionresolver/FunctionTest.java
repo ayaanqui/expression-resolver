@@ -38,7 +38,7 @@ public class FunctionTest {
 
         res = resolver.setExpression("deg(2*pi)").solveExpression();
         assertTrue(res.success);
-        assertEquals(new Double(360), res.result, DIFF);
+        assertEquals((double) 360, res.result, DIFF);
 
         res = resolver.setExpression("log(67, e)").solveExpression();
         assertTrue(res.success);
