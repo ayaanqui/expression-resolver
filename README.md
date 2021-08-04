@@ -45,24 +45,13 @@ The Expression Resolver for Java provides a very easy way to solve any valid mat
 ### Apache Maven
 
 ```xml
-<repositories>
-    ...
-
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
-```
-
-```xml
 <dependencies>
     ...
 
     <dependency>
         <groupId>com.github.ayaanqui</groupId>
         <artifactId>expression-resolver</artifactId>
-        <version>master-SNAPSHOT</version>
+        <version>2.0</version>
     </dependency>
 </dependencies>
 ```
