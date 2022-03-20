@@ -1,6 +1,10 @@
 # Expression Resolver
 
-[![](https://jitpack.io/v/ayaanqui/expression-resolver.svg)](https://jitpack.io/#ayaanqui/expression-resolver) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![HitCount](http://hits.dwyl.com/{username}/{project-name}.svg)](http://hits.dwyl.com/ayaanqui/expression-resolver)
+![Build](https://github.com/ayaanqui/expression-resolver/actions/workflows/build.yml/badge.svg)
+![Unit Tests](https://github.com/ayaanqui/expression-resolver/actions/workflows/test.yml/badge.svg)
+[![](https://jitpack.io/v/ayaanqui/expression-resolver.svg)](https://jitpack.io/#ayaanqui/expression-resolver) 
+[![HitCount](https://hits.dwyl.com/ayaanqui/expression-resolver.svg?style=flat)](http://hits.dwyl.com/ayaanqui/expression-resolver)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 The Expression Resolver for Java provides a very easy way to solve any valid mathematical expression. The string based expression is parsed, and then reduced to a single numeric value. If the experssion was unable to reduce completely, the program tries to give clear error messages, such that the user is notified. _(Note: The program escapes all whitespaces and `$` signs)_
 
