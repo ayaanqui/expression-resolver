@@ -3,7 +3,7 @@ name: Build
 on: push
 
 jobs:
-  build:
+  package:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,5 +14,5 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: build package
       run: mvn package

@@ -3,7 +3,7 @@ name: Unit Tests
 on: push
 
 jobs:
-  build:
+  junit:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,5 +14,5 @@ jobs:
         java-version: '8'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: run unit tests with junit
       run: mvn test
