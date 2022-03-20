@@ -1,6 +1,7 @@
 package com.github.ayaanqui.expressionresolver.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,5 +94,40 @@ public class MathFunctions {
             formattedUserInput.remove(i + 1); // Remove x from formattedUserInput
         }
         return Response.getSuccess(0);
+    }
+
+    public static void generatePredefinedFunctions(Map<String, Function<Double[], Double>> functionList) {
+        functionList.put("sqrt", args -> Math.sqrt(args[0]));
+        functionList.put("sin", args -> Math.sin(args[0]));
+        functionList.put("cos", args -> Math.cos(args[0]));
+        functionList.put("tan", args -> Math.tan(args[0]));
+        functionList.put("ln", args -> Math.log(args[0]));
+        functionList.put("log", args -> Math.log(args[0]) / Math.log(args[1]));
+        functionList.put("deg", args -> args[0] * (180 / Math.PI));
+        functionList.put("rad", args -> args[0] * (Math.PI / 180));
+        functionList.put("abs", args -> Math.abs(args[0]));
+        functionList.put("exp", args -> Math.exp(args[0]));
+        functionList.put("arcsin", args -> Math.asin(args[0]));
+        functionList.put("arccos", args -> Math.acos(args[0]));
+        functionList.put("arctan", args -> Math.atan(args[0]));
+        functionList.put("avg", args -> {
+            double sum = Arrays.stream(args).reduce(0.0, (total, arg) -> total += arg);
+            return sum / args.length;
+        });
+        functionList.put("sum", args -> {
+            return Arrays.stream(args).reduce(0.0, (total, arg) -> total += arg);
+        });
+        functionList.put("fact", args -> {
+            double factorial = 1;
+            for (int i = args[0].intValue(); i > 1; i--)
+                factorial *= i;
+            return factorial;
+        });
+    }
+
+    public static void generatePredefinedConstants(Map<String, Double> variableMap) {
+        variableMap.put("pi", Math.PI);
+        variableMap.put("e", Math.E);
+        variableMap.put("tau", 2 * Math.PI);
     }
 }
